@@ -5,13 +5,13 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.app.Activity;
 import android.widget.ImageButton;
@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 
 public class MainActivity extends Activity{
@@ -32,34 +33,55 @@ public class MainActivity extends Activity{
     private int REQUEST_GALLERY = 2;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
-    String mCurrentPhotoPath;
+    public String mCurrentPhotoPath;
     public OnSwipeTouchListener onSwipeTouchListener;
+    public ViewPager mViewPager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        try {
-            mCamera = Camera.open();
-        } catch (Exception e) {
-            Log.d("ERROR", "Failed to get camera " + e.getMessage());
-        }
-
-        if (mCamera != null) {
-            mCameraPreview = new CameraPreview(this, mCamera);
-            FrameLayout camera_preview = (FrameLayout) findViewById(R.id.camera_preview);
-            camera_preview.addView(mCameraPreview);
-        }
-
+        createCameraPreview();
         takepicClick();
         galleryClick();
 
         onSwipeTouchListener = new OnSwipeTouchListener(this);
+        /**
+        mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        getActionBar().setSelectedNavigationItem(position);
+                    }
+                });
+         */
+
+    }
+    private Camera getCameraInstance(){
+        Camera camera= null;
+        try {
+            camera = Camera.open();
+        } catch (Exception e) {
+            Log.d("ERROR", "Failed to get camera " + e.getMessage());
+        }
+        return camera;
     }
 
-    public void galleryClick(){
+    private CameraPreview createCameraPreview(){
+        mCamera = getCameraInstance();
+        if(mCamera != null){
+            mCameraPreview = new CameraPreview(this, mCamera);
+            FrameLayout camera_preview = (FrameLayout) findViewById(R.id.camera_preview);
+            camera_preview.addView(mCameraPreview);
+        }
+        return mCameraPreview;
+    }
+
+    private void galleryClick(){
         ImageButton gallery = (ImageButton)findViewById(R.id.gallery);
         gallery.setOnClickListener(new OnClickListener() {
             public void onClick(View arg0) {
@@ -68,30 +90,30 @@ public class MainActivity extends Activity{
         });
     }
 
-    public void takepicClick(){
+    private void takepicClick(){
         ImageButton takepic = (ImageButton)findViewById(R.id.takepic);
-        takepic.setOnClickListener(new OnClickListener(){
-            public void onClick(View arg0){
+        takepic.setOnClickListener(new OnClickListener() {
+            public void onClick(View arg0) {
                 File photoFile = null;
-                try{
+                try {
                     photoFile = createImageFile();
-                }
-                catch (IOException e){
+                } catch (IOException e) {
 
                 }
 
-                if (photoFile != null){
+                if (photoFile != null) {
                     mCamera.takePicture(null, null, mPicture);
                 }
-
             }
         });
+        mCamera.stopPreview();
     }
 
     public void receivedClick(){
         ImageButton received = (ImageButton)findViewById(R.id.received);
         //received.setOnClickListener(new );
     }
+
     /**
     private void dispatchTakePictureIntent(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -106,6 +128,7 @@ public class MainActivity extends Activity{
         if(galleryIntent.resolveActivity(getPackageManager()) != null)
             startActivityForResult(galleryIntent, REQUEST_GALLERY);
     }
+
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -144,6 +167,7 @@ public class MainActivity extends Activity{
                 Log.d("Tester", "failed to create directory");
                 return null;
             }
+
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -154,6 +178,7 @@ public class MainActivity extends Activity{
             mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
         else
             return null;
+
         return mediaFile;
     }
 
