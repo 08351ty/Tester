@@ -1,7 +1,12 @@
 package com.example.pascalso.tester;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,6 +21,7 @@ import android.widget.FrameLayout;
 import android.app.Activity;
 import android.widget.ImageButton;
 import android.view.View.OnClickListener;
+import android.view.SurfaceHolder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,19 +30,24 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.widget.ImageView;
 
 
 public class MainActivity extends Activity{
+
     private Camera mCamera;
     public CameraPreview mCameraPreview;
+    public String mCurrentPhotoPath;
+    public OnSwipeTouchListener onSwipeTouchListener;
+    public ViewPager mViewPager;
+    private SurfaceHolder mHolder;
+    public boolean previewing = false;
+
     private int REQUEST_IMAGE_CAPTURE = 1;
     private int REQUEST_GALLERY = 2;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
-    public String mCurrentPhotoPath;
-    public OnSwipeTouchListener onSwipeTouchListener;
-    public ViewPager mViewPager;
-
+    private static final int RESULT_LOAD_IMAGE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,7 @@ public class MainActivity extends Activity{
         createCameraPreview();
         takepicClick();
         galleryClick();
+        receivedClick();
 
         onSwipeTouchListener = new OnSwipeTouchListener(this);
         /**
@@ -81,6 +93,7 @@ public class MainActivity extends Activity{
         return mCameraPreview;
     }
 
+
     private void galleryClick(){
         ImageButton gallery = (ImageButton)findViewById(R.id.gallery);
         gallery.setOnClickListener(new OnClickListener() {
@@ -106,12 +119,15 @@ public class MainActivity extends Activity{
                 }
             }
         });
-        mCamera.stopPreview();
     }
 
     public void receivedClick(){
         ImageButton received = (ImageButton)findViewById(R.id.received);
-        //received.setOnClickListener(new );
+        received.setOnClickListener(new OnClickListener(){
+            public void onClick(View arg0){
+                setContentView(R.layout.activity_received);
+            }
+        });
     }
 
     /**
@@ -127,6 +143,22 @@ public class MainActivity extends Activity{
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         if(galleryIntent.resolveActivity(getPackageManager()) != null)
             startActivityForResult(galleryIntent, REQUEST_GALLERY);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        //if(requestCode == REQUEST_GALLERY && resultCode == MEDIA_TYPE_IMAGE){
+            Uri pickedImage = data.getData();
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
+            cursor.moveToFirst();
+            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+            cursor.close();
+            Bitmap image = BitmapFactory.decodeFile(imagePath);
+            setContentView(R.layout.activity_selectedimage);
+            ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
+            imageView.setImageBitmap(image);
+        //}
     }
 
 
