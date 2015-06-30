@@ -1,16 +1,41 @@
 package com.example.pascalso.tester;
 
+<<<<<<< HEAD
 import android.app.Activity;
+=======
+import android.app.ActionBar;
+>>>>>>> origin/master
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+=======
+import android.media.Image;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+>>>>>>> origin/master
 import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
 import android.view.View.OnClickListener;
+=======
+>>>>>>> origin/master
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+<<<<<<< HEAD
+=======
+import android.view.View.OnClickListener;
+import android.view.SurfaceHolder;
+>>>>>>> origin/master
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,43 +43,72 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.widget.ImageView;
 
 
 public class MainActivity extends Activity{
+
     private Camera mCamera;
     public CameraPreview mCameraPreview;
+    public String mCurrentPhotoPath;
+    public OnSwipeTouchListener onSwipeTouchListener;
+    public ViewPager mViewPager;
+    private SurfaceHolder mHolder;
+    public boolean previewing = false;
+
     private int REQUEST_IMAGE_CAPTURE = 1;
     private int REQUEST_GALLERY = 2;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
-    String mCurrentPhotoPath;
-    public OnSwipeTouchListener onSwipeTouchListener;
-
+    private static final int RESULT_LOAD_IMAGE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        createCameraPreview();
+        takepicClick();
+        galleryClick();
+        receivedClick();
 
+        onSwipeTouchListener = new OnSwipeTouchListener(this);
+        /**
+        mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        // When swiping between pages, select the
+                        // corresponding tab.
+                        getActionBar().setSelectedNavigationItem(position);
+                    }
+                });
+         */
+
+    }
+    private Camera getCameraInstance(){
+        Camera camera= null;
         try {
-            mCamera = Camera.open();
+            camera = Camera.open();
         } catch (Exception e) {
             Log.d("ERROR", "Failed to get camera " + e.getMessage());
         }
+        return camera;
+    }
 
-        if (mCamera != null) {
+    private CameraPreview createCameraPreview(){
+        mCamera = getCameraInstance();
+        if(mCamera != null){
             mCameraPreview = new CameraPreview(this, mCamera);
             FrameLayout camera_preview = (FrameLayout) findViewById(R.id.camera_preview);
             camera_preview.addView(mCameraPreview);
         }
-
-        takepicClick();
-        galleryClick();
-
-        onSwipeTouchListener = new OnSwipeTouchListener(this);
+        return mCameraPreview;
     }
 
-    public void galleryClick(){
+
+    private void galleryClick(){
         ImageButton gallery = (ImageButton)findViewById(R.id.gallery);
         gallery.setOnClickListener(new OnClickListener() {
             public void onClick(View arg0) {
@@ -63,23 +117,21 @@ public class MainActivity extends Activity{
         });
     }
 
-    public void takepicClick(){
+    private void takepicClick(){
         ImageButton takepic = (ImageButton)findViewById(R.id.takepic);
-        takepic.setOnClickListener(new OnClickListener(){
-            public void onClick(View arg0){
+        takepic.setOnClickListener(new OnClickListener() {
+            public void onClick(View arg0) {
                 File photoFile = null;
-                try{
+                try {
                     photoFile = createImageFile();
-                }
-                catch (IOException e){
+                } catch (IOException e) {
 
                 }
 
-                if (photoFile != null){
+                if (photoFile != null) {
                     mCamera.takePicture(null, null, mPicture);
 
                 }
-
             }
         });
         return;
@@ -87,8 +139,13 @@ public class MainActivity extends Activity{
 
     public void receivedClick(){
         ImageButton received = (ImageButton)findViewById(R.id.received);
-        //received.setOnClickListener(new );
+        received.setOnClickListener(new OnClickListener(){
+            public void onClick(View arg0){
+                setContentView(R.layout.activity_received);
+            }
+        });
     }
+
     /**
     private void dispatchTakePictureIntent(){
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -103,6 +160,23 @@ public class MainActivity extends Activity{
         if(galleryIntent.resolveActivity(getPackageManager()) != null)
             startActivityForResult(galleryIntent, REQUEST_GALLERY);
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        //if(requestCode == REQUEST_GALLERY && resultCode == MEDIA_TYPE_IMAGE){
+            Uri pickedImage = data.getData();
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
+            cursor.moveToFirst();
+            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+            cursor.close();
+            Bitmap image = BitmapFactory.decodeFile(imagePath);
+            setContentView(R.layout.activity_selectedimage);
+            ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
+            imageView.setImageBitmap(image);
+        //}
+    }
+
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -141,6 +215,7 @@ public class MainActivity extends Activity{
                 Log.d("Tester", "failed to create directory");
                 return null;
             }
+
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -151,6 +226,7 @@ public class MainActivity extends Activity{
             mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
         else
             return null;
+
         return mediaFile;
     }
 
