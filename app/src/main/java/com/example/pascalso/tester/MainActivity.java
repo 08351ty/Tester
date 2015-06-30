@@ -1,21 +1,16 @@
 package com.example.pascalso.tester;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Camera;
-import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.app.Activity;
-import android.widget.ImageButton;
 import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -82,10 +77,12 @@ public class MainActivity extends Activity{
 
                 if (photoFile != null){
                     mCamera.takePicture(null, null, mPicture);
+
                 }
 
             }
         });
+        return;
     }
 
     public void receivedClick(){
