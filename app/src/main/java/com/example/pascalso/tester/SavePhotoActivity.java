@@ -10,10 +10,10 @@ import java.util.Date;
 /**
  * Created by owner on 6/26/15.
  */
-public class SavePhoto {
+public class SavePhotoActivity {
     String mCurrentPhotoPath;
 
-    public SavePhoto(){
+    public SavePhotoActivity(){
 
     }
 
