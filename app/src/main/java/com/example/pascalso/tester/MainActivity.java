@@ -1,10 +1,16 @@
 package com.example.pascalso.tester;
 
+import android.app.Activity;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -13,8 +19,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.app.Activity;
 import android.widget.ImageButton;
 import android.view.View.OnClickListener;
 import android.view.SurfaceHolder;
@@ -113,9 +119,11 @@ public class MainActivity extends Activity{
 
                 if (photoFile != null) {
                     mCamera.takePicture(null, null, mPicture);
+
                 }
             }
         });
+        return;
     }
 
     private void homeClick(){
