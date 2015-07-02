@@ -41,7 +41,6 @@ import java.util.Date;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
-
 public class MainActivity extends Activity{
 
     private Camera mCamera;
@@ -141,6 +140,16 @@ public class MainActivity extends Activity{
             public void onClick(View arg0) {
                 setContentView(R.layout.activity_received);
                 mCamera.stopPreview();
+            }
+        });
+    }
+
+    public void sendClick(){
+        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
+        send.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                setContentView(R.layout.activity_info);
             }
         });
     }
