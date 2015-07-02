@@ -12,12 +12,12 @@ import java.io.IOException;
 /**
  * Created by owner on 6/25/15.
  */
-public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraPreviewFragment extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder mHolder;
     private Camera mCamera;
 
-    public CameraPreview(Context context, Camera camera){
+    public CameraPreviewFragment(Context context, Camera camera){
         super(context);
         mCamera = camera;
         mCamera.setDisplayOrientation(90);
