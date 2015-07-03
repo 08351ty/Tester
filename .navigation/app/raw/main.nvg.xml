@@ -6,6 +6,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+<<<<<<< HEAD
         className = "com.example.pascalso.tester.PhotoInfoFragment"/>
       <point      
         x = "932"      
@@ -42,6 +43,12 @@
       <point      
         x = "936"      
         y = "1364"/>
+=======
+        className = "com.example.pascalso.tester.MainActivity"/>
+      <point      
+        x = "500"      
+        y = "100"/>
+>>>>>>> origin/master
     </statePointEntry>
   </locations>
 </navigationModel>

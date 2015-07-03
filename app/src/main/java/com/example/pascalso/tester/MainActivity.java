@@ -1,6 +1,11 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
+<<<<<<< HEAD
+=======
+import android.app.Activity;
+import android.app.ActionBar;
+>>>>>>> origin/master
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +13,18 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.net.Uri;
+<<<<<<< HEAD
+=======
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+>>>>>>> origin/master
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -15,16 +32,13 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.view.SurfaceHolder;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import android.widget.ImageView;
-
 
 public class MainActivity extends Activity{
 
@@ -32,10 +46,6 @@ public class MainActivity extends Activity{
     public CameraPreviewFragment mCameraPreviewFragment;
     public String mCurrentPhotoPath;
     public OnSwipeTouchListener onSwipeTouchListener;
-    public ViewPager mViewPager;
-    private SurfaceHolder mHolder;
-    public boolean previewing = false;
-
     private int REQUEST_IMAGE_CAPTURE = 1;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
@@ -49,12 +59,15 @@ public class MainActivity extends Activity{
         takepicClick();
         galleryClick();
         receivedClick();
+<<<<<<< HEAD
         findViewById(R.id.received).setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
             }
         });
+=======
+>>>>>>> origin/master
         /**
          mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
          mViewPager.setOnPageChangeListener(
@@ -115,9 +128,36 @@ public class MainActivity extends Activity{
 
     public void receivedClick(){
         ImageButton received = (ImageButton)findViewById(R.id.received);
+<<<<<<< HEAD
         received.setOnClickListener(new OnClickListener(){
             public void onClick(View arg0){
                 startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
+=======
+        received.setOnClickListener(new OnClickListener() {
+            public void onClick(View arg0) {
+                setContentView(R.layout.activity_received);
+                mCamera.stopPreview();
+            }
+        });
+    }
+
+    public void sendClick(){
+        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
+        send.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                setContentView(R.layout.activity_info);
+            }
+        });
+    }
+
+    public void sendClick(){
+        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
+        send.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                setContentView(R.layout.activity_info);
+>>>>>>> origin/master
             }
         });
     }
