@@ -23,7 +23,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ReceivedFragment"/>
+
         <activity android:name=".SelectedImageFragment"/>
+
+        <activity android:name=".AccessGalleryActivity"/>
+
+        <activity android:name=".PhotoInfoFragment"/>
 
     </application>
 

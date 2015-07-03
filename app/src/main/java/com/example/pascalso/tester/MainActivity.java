@@ -1,28 +1,19 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.view.View.OnClickListener;
 import android.view.SurfaceHolder;
 
 import java.io.File;
@@ -33,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.widget.ImageView;
-import android.widget.Spinner;
 
 
 public class MainActivity extends Activity{
@@ -47,34 +37,35 @@ public class MainActivity extends Activity{
     public boolean previewing = false;
 
     private int REQUEST_IMAGE_CAPTURE = 1;
-    private int REQUEST_GALLERY = 2;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
     private static final int RESULT_LOAD_IMAGE = 5;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createCameraPreview();
         takepicClick();
         galleryClick();
         receivedClick();
-
-        onSwipeTouchListener = new OnSwipeTouchListener(this);
+        findViewById(R.id.received).setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
+            }
+        });
         /**
-        mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
-        mViewPager.setOnPageChangeListener(
-                new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                        // When swiping between pages, select the
-                        // corresponding tab.
-                        getActionBar().setSelectedNavigationItem(position);
-                    }
-                });
+         mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
+         mViewPager.setOnPageChangeListener(
+         new ViewPager.SimpleOnPageChangeListener() {
+        @Override public void onPageSelected(int position) {
+        // When swiping between pages, select the
+        // corresponding tab.
+        getActionBar().setSelectedNavigationItem(position);
+        }
+        });
          */
-
     }
     private Camera getCameraInstance(){
         Camera camera= null;
@@ -96,60 +87,37 @@ public class MainActivity extends Activity{
         return mCameraPreviewFragment;
     }
 
-
     private void galleryClick(){
         ImageButton gallery = (ImageButton)findViewById(R.id.gallery);
-        gallery.setOnClickListener(new OnClickListener() {
-            public void onClick(View arg0) {
-                dispatchGalleryIntent();
+        gallery.setOnClickListener(new OnClickListener(){
+            public void onClick(View arg0){
+                startActivity(new Intent(MainActivity.this, AccessGalleryActivity.class));
             }
         });
     }
 
     private void takepicClick(){
         ImageButton takepic = (ImageButton)findViewById(R.id.takepic);
-        takepic.setOnClickListener(new OnClickListener() {
-            public void onClick(View arg0) {
+        takepic.setOnClickListener(new OnClickListener(){
+            public void onClick(View arg0){
                 File photoFile = null;
                 try {
                     photoFile = createImageFile();
-                } catch (IOException e) {
+                }catch (IOException e){
 
                 }
-
                 if (photoFile != null) {
                     mCamera.takePicture(null, null, mPicture);
-
                 }
-            }
-        });
-        return;
-    }
-
-    private void homeClick(){
-        ImageButton home = (ImageButton)findViewById(R.id.returnhome);
-        home.setOnClickListener(new OnClickListener(){
-            public void onClick(View arg0){
-
             }
         });
     }
 
     public void receivedClick(){
         ImageButton received = (ImageButton)findViewById(R.id.received);
-        received.setOnClickListener(new OnClickListener() {
-            public void onClick(View arg0) {
-                setContentView(R.layout.activity_received);
-            }
-        });
-    }
-
-    public void sendClick(){
-        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
-        send.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                setContentView(R.layout.activity_info);
+        received.setOnClickListener(new OnClickListener(){
+            public void onClick(View arg0){
+                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
             }
         });
     }
@@ -161,32 +129,6 @@ public class MainActivity extends Activity{
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
     }
      */
-
-
-    private void dispatchGalleryIntent(){
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        if(galleryIntent.resolveActivity(getPackageManager()) != null)
-            startActivityForResult(galleryIntent, REQUEST_GALLERY);
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        //if(requestCode == REQUEST_GALLERY && resultCode == MEDIA_TYPE_IMAGE){
-            Uri pickedImage = data.getData();
-            String[] filePath = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-            cursor.moveToFirst();
-            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-            cursor.close();
-            Bitmap image = BitmapFactory.decodeFile(imagePath);
-            setContentView(R.layout.activity_selectedimage);
-            ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
-            imageView.setImageBitmap(image);
-            SelectedImageFragment mSelectedImageFragment = new SelectedImageFragment();
-
-        //}
-    }
-
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -220,8 +162,6 @@ public class MainActivity extends Activity{
                 Bitmap image = BitmapFactory.decodeFile(imagePath);
                 ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
                 imageView.setImageBitmap(image);
-                sendClick();
-
             }
             catch (FileNotFoundException e){
                 Log.d("TAG", "File not found" + e.getMessage());
@@ -254,7 +194,28 @@ public class MainActivity extends Activity{
         return mediaFile;
     }
 
+    protected void onStart(){
+        super.onStart();
+    }
 
+    protected void onPause(){
+        super.onPause();
+        mCamera.stopPreview();
+    }
+
+    protected void onResume(){
+        super.onResume();
+        mCamera.startPreview();
+    }
+
+    protected void onRestart(){
+        super.onRestart();
+        setContentView(R.layout.activity_main);
+        createCameraPreview();
+        takepicClick();
+        galleryClick();
+        receivedClick();
+    }
 
     /**
     @Override

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.pascalso.tester.PhotoInfoFragment"/>
+      <point      
+        x = "932"      
+        y = "-12"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.pascalso.tester.ReceivedFragment"/>
+      <point      
+        x = "1820"      
+        y = "-4"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.pascalso.tester.MainActivity"/>
+      <point      
+        x = "52"      
+        y = "-24"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.pascalso.tester.AccessGalleryActivity"/>
+      <point      
+        x = "44"      
+        y = "1356"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.pascalso.tester.SelectedImageFragment"/>
+      <point      
+        x = "936"      
+        y = "1364"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
