@@ -4,6 +4,12 @@ import android.app.Activity;
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import android.app.Activity;
+import android.app.ActionBar;
+>>>>>>> origin/master
+>>>>>>> origin/master
 =======
 import android.app.Activity;
 import android.app.ActionBar;
@@ -17,6 +23,9 @@ import android.hardware.Camera;
 =======
 import android.os.Bundle;
 import android.os.Environment;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 import android.net.Uri;
 <<<<<<< HEAD
@@ -31,7 +40,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/master
 >>>>>>> origin/master
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -50,6 +62,9 @@ import java.util.Date;
 <<<<<<< HEAD
 =======
 import android.widget.ImageView;
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
 
 public class MainActivity extends Activity{
