@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -24,13 +25,21 @@
             android:spinnerMode="dropdown" />
 
         <Switch
-            android:layout_width="372dp"
+            android:layout_width="355dp"
             android:layout_height="wrap_content"
             android:text="Show Me Working"
             android:id="@+id/switch1"
-            android:checked="true" />
-
+            android:layout_gravity="center_horizontal"
+            android:checked="false" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal|bottom"
+        android:padding="20dp"/>
 
 </FrameLayout>
