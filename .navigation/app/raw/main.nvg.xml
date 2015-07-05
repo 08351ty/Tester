@@ -6,49 +6,42 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-<<<<<<< HEAD
-        className = "com.example.pascalso.tester.PhotoInfoFragment"/>
-      <point      
-        x = "932"      
-        y = "-12"/>
-    </statePointEntry>
-    <statePointEntry>
-      <state      
-        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.example.pascalso.tester.ReceivedFragment"/>
       <point      
-        x = "1820"      
-        y = "-4"/>
+        x = "500"      
+        y = "1480"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.example.pascalso.tester.MainActivity"/>
       <point      
-        x = "52"      
-        y = "-24"/>
+        x = "1768"      
+        y = "100"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.pascalso.tester.PhotoInfoFragment"/>
+      <point      
+        x = "500"      
+        y = "96"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.example.pascalso.tester.AccessGalleryActivity"/>
       <point      
-        x = "44"      
-        y = "1356"/>
+        x = "550"      
+        y = "1530"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.example.pascalso.tester.SelectedImageFragment"/>
       <point      
-        x = "936"      
-        y = "1364"/>
-=======
-        className = "com.example.pascalso.tester.MainActivity"/>
-      <point      
-        x = "500"      
-        y = "100"/>
->>>>>>> origin/master
+        x = "600"      
+        y = "1580"/>
     </statePointEntry>
   </locations>
 </navigationModel>
