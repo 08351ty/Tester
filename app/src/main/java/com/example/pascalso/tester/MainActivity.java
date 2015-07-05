@@ -1,6 +1,10 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
+<<<<<<< Updated upstream
+=======
+import android.app.ActionBar;
+>>>>>>> Stashed changes
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +18,17 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+<<<<<<< Updated upstream
 
+=======
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.view.SurfaceHolder;
+>>>>>>> Stashed changes
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -41,6 +55,15 @@ public class MainActivity extends Activity{
         takepicClick();
         galleryClick();
         receivedClick();
+<<<<<<< Updated upstream
+=======
+        findViewById(R.id.received).setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
+            }
+        });
+>>>>>>> Stashed changes
         /**
          mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
          mViewPager.setOnPageChangeListener(
@@ -108,6 +131,17 @@ public class MainActivity extends Activity{
         });
     }
 
+<<<<<<< Updated upstream
+=======
+    /**
+    private void dispatchTakePictureIntent(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null)
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    }
+     */
+
+>>>>>>> Stashed changes
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
