@@ -1,71 +1,26 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import android.app.Activity;
-import android.app.ActionBar;
->>>>>>> origin/master
->>>>>>> origin/master
-=======
-import android.app.Activity;
-import android.app.ActionBar;
->>>>>>> origin/master
->>>>>>> origin/master
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
-<<<<<<< HEAD
-=======
-import android.os.Bundle;
-import android.os.Environment;
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
 import android.net.Uri;
-<<<<<<< HEAD
-=======
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/master
->>>>>>> origin/master
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.view.SurfaceHolder;
->>>>>>> origin/master
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-<<<<<<< HEAD
-=======
-import android.widget.ImageView;
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
 
 public class MainActivity extends Activity{
 
@@ -86,15 +41,6 @@ public class MainActivity extends Activity{
         takepicClick();
         galleryClick();
         receivedClick();
-<<<<<<< HEAD
-        findViewById(R.id.received).setOnClickListener(new OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
-            }
-        });
-=======
->>>>>>> origin/master
         /**
          mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
          mViewPager.setOnPageChangeListener(
@@ -129,8 +75,8 @@ public class MainActivity extends Activity{
 
     private void galleryClick(){
         ImageButton gallery = (ImageButton)findViewById(R.id.gallery);
-        gallery.setOnClickListener(new OnClickListener(){
-            public void onClick(View arg0){
+        gallery.setOnClickListener(new OnClickListener() {
+            public void onClick(View arg0) {
                 startActivity(new Intent(MainActivity.this, AccessGalleryActivity.class));
             }
         });
@@ -155,50 +101,12 @@ public class MainActivity extends Activity{
 
     public void receivedClick(){
         ImageButton received = (ImageButton)findViewById(R.id.received);
-<<<<<<< HEAD
         received.setOnClickListener(new OnClickListener(){
             public void onClick(View arg0){
                 startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
-=======
-        received.setOnClickListener(new OnClickListener() {
-            public void onClick(View arg0) {
-                setContentView(R.layout.activity_received);
-                mCamera.stopPreview();
             }
         });
     }
-
-    public void sendClick(){
-        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
-        send.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                setContentView(R.layout.activity_info);
-            }
-        });
-    }
-
-<<<<<<< HEAD
-=======
-    public void sendClick(){
-        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
-        send.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                setContentView(R.layout.activity_info);
->>>>>>> origin/master
-            }
-        });
-    }
-
->>>>>>> origin/master
-    /**
-    private void dispatchTakePictureIntent(){
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePictureIntent.resolveActivity(getPackageManager()) != null)
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-    }
-     */
 
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -232,6 +140,10 @@ public class MainActivity extends Activity{
                 Bitmap image = BitmapFactory.decodeFile(imagePath);
                 ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
                 imageView.setImageBitmap(image);
+                homeClick();
+                commentClick();
+                sendClick();
+
             }
             catch (FileNotFoundException e){
                 Log.d("TAG", "File not found" + e.getMessage());
@@ -262,6 +174,34 @@ public class MainActivity extends Activity{
             return null;
 
         return mediaFile;
+    }
+
+    public void homeClick(){
+        ImageButton home = (ImageButton)findViewById(R.id.returnhome);
+        home.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+            }
+        });
+    }
+
+    public void commentClick(){
+        ImageButton comment = (ImageButton)findViewById(R.id.addcomment);
+        comment.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View arg0){
+                //Dialog dialog = new Dialog(context);
+            }
+        });
+    }
+
+    public void sendClick(){
+        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                startActivity(new Intent(MainActivity.this, PhotoInfoFragment.class));
+            }
+        });
     }
 
     protected void onStart(){
