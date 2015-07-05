@@ -14,13 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.view.SurfaceHolder;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,6 +37,8 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Parse.enableLocalDatastore(this);
+        //Parse.initialize(this, "OlKO7GclrmS2MLdwK2Av7puo7T2LcS67w7BiI2ye", "6PpmXqQlWrMlXHnwoJrhfZn7oRRebGTwzksyR4ej");
         createCameraPreview();
         takepicClick();
         galleryClick();

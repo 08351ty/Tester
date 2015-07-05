@@ -1,14 +1,9 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 /**
@@ -24,7 +19,7 @@ public class ReceivedFragment extends Activity {
         listView = (ListView) findViewById(R.id.receivedphotos);
         String [] values = new String [] {"|Physics| Received: July 3","|Math| Received: July 2",
                 "|Math| Received: July 2", "|Math| Received July 1"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
 
