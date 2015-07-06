@@ -21,12 +21,17 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.view.SurfaceHolder;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 public class MainActivity extends Activity{
 
@@ -47,6 +52,16 @@ public class MainActivity extends Activity{
         takepicClick();
         galleryClick();
         receivedClick();
+
+
+        //Testing Parse Cloud data
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "OlKO7GclrmS2MLdwK2Av7puo7T2LcS67w7BiI2ye", "6PpmXqQlWrMlXHnwoJrhfZn7oRRebGTwzksyR4ej");
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+
+
         /**
          mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
          mViewPager.setOnPageChangeListener(

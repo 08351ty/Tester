@@ -16,7 +16,7 @@ import android.widget.ImageView;
  * Created by owner on 6/26/15.
  */
 public class AccessGalleryActivity extends Activity {
-
+    public static Bitmap image;
     private int REQUEST_GALLERY = 2;
 
     public void onCreate(Bundle savedInstanceState){
@@ -39,7 +39,7 @@ public class AccessGalleryActivity extends Activity {
         cursor.moveToFirst();
         String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
         cursor.close();
-        Bitmap image = BitmapFactory.decodeFile(imagePath);
+        image = BitmapFactory.decodeFile(imagePath);
         setContentView(R.layout.activity_selectedimage);
         ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
         imageView.setImageBitmap(image);
@@ -87,5 +87,9 @@ public class AccessGalleryActivity extends Activity {
 
     public void onResume(){
         super.onResume();
+    }
+
+    public static Bitmap getImage(){
+        return image;
     }
 }

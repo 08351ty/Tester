@@ -1,6 +1,7 @@
 package com.example.pascalso.tester;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -9,6 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by owner on 7/3/15.
@@ -23,6 +29,7 @@ public class PhotoInfoFragment extends FragmentActivity{
         selectSubject();
         selectGrade();
         sendPic();
+
     }
 
     private void selectSubject(){
@@ -65,29 +72,55 @@ public class PhotoInfoFragment extends FragmentActivity{
 
     public void sendPic(){
         Button goButton = (Button) findViewById(R.id.gobutton);
-        goButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View arg0){
-                if(grade.equals("--Select--") && subject.equals("--Select--")){
+        goButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                if (grade.equals("--Select--") && subject.equals("--Select--")) {
                     Toast.makeText(getApplicationContext(), "Please select your grade and subject",
                             Toast.LENGTH_SHORT).show();
-                }
-                else if (grade.equals("--Select--") && !subject.equals("--Select--")) {
+                } else if (grade.equals("--Select--") && !subject.equals("--Select--")) {
                     Toast.makeText(getApplicationContext(), "Please select your grade",
                             Toast.LENGTH_SHORT).show();
-                }
-                else if (!grade.equals("--Select--") && subject.equals("--Select--")){
+                } else if (!grade.equals("--Select--") && subject.equals("--Select--")) {
                     Toast.makeText(getApplicationContext(), "Please select your subject",
                             Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Your problem has been sent!",
                             Toast.LENGTH_SHORT).show();
+                    saveImageToParse();
                     startActivity(new Intent(PhotoInfoFragment.this, MainActivity.class));
 
                 }
 
             }
         });
+
+    }
+
+    private void saveImageToParse(){
+        Bitmap selectedImage = AccessGalleryActivity.getImage();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte [] bytearray = stream.toByteArray();
+
+        ParseObject x = new ParseObject("ReceivedPictures");
+        x.put("mediatype", "image");
+        if (bytearray != null){
+            ParseFile file = new ParseFile("TestPic", bytearray);
+            file.saveInBackground();
+            x.put("TestPic1", file);
+        }
+        x.saveInBackground();
+    }
+
+    protected void onPause(){
+
+    }
+
+    protected void onResume(){
+
+    }
+
+    protected void onRestart(){
 
     }
 
