@@ -10,10 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import com.parse.Parse;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -29,12 +28,13 @@ public class PhotoInfoFragment extends FragmentActivity{
         selectSubject();
         selectGrade();
         sendPic();
-
+        //Parse.enableLocalDatastore(this);
+        //Parse.initialize(this, "OlKO7GclrmS2MLdwK2Av7puo7T2LcS67w7BiI2ye", "6PpmXqQlWrMlXHnwoJrhfZn7oRRebGTwzksyR4ej");
     }
 
     private void selectSubject(){
         Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
-        String[] items = new String[]{"--Select--","Math", "Physics", "English"};
+        String[] items = new String[]{"--Select--","Math", "Physics", "English", "Economics"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -43,10 +43,8 @@ public class PhotoInfoFragment extends FragmentActivity{
                 Object item = parent.getItemAtPosition(position);
                 subject = item.toString();
             }
-
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onNothingSelected(AdapterView<?> parent){
             }
         });
     }
@@ -101,9 +99,10 @@ public class PhotoInfoFragment extends FragmentActivity{
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte [] bytearray = stream.toByteArray();
-
         ParseObject x = new ParseObject("ReceivedPictures");
-        x.put("mediatype", "image");
+        x.put("Mediatype", "image");
+        x.put("Subject", subject);
+        x.put("Grade", grade);
         if (bytearray != null){
             ParseFile file = new ParseFile("TestPic", bytearray);
             file.saveInBackground();
@@ -113,15 +112,15 @@ public class PhotoInfoFragment extends FragmentActivity{
     }
 
     protected void onPause(){
-
+        super.onPause();
     }
 
     protected void onResume(){
-
+        super.onResume();
     }
 
     protected void onRestart(){
-
+        super.onRestart();
     }
 
 
