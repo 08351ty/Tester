@@ -14,7 +14,6 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-<<<<<<< HEAD
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +24,6 @@ import android.view.SurfaceHolder;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
-=======
->>>>>>> origin/master
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +39,7 @@ public class MainActivity extends Activity{
     public CameraPreviewFragment mCameraPreviewFragment;
     public String mCurrentPhotoPath;
     public OnSwipeTouchListener onSwipeTouchListener;
+    private static Bitmap selectedimage;
     private int REQUEST_IMAGE_CAPTURE = 1;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
@@ -60,11 +58,6 @@ public class MainActivity extends Activity{
 
 
         //Testing Parse Cloud data
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "OlKO7GclrmS2MLdwK2Av7puo7T2LcS67w7BiI2ye", "6PpmXqQlWrMlXHnwoJrhfZn7oRRebGTwzksyR4ej");
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
 
 
         /**
@@ -162,13 +155,19 @@ public class MainActivity extends Activity{
                 MainActivity.this.sendBroadcast(new Intent(
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
                         .parse("file://" + imagePath)));
+                Bitmap image = BitmapFactory.decodeFile(imagePath);
+                setImage(image);
+                startActivity(new Intent(MainActivity.this, SelectedImageFragment.class));
+                /**
                 setContentView(R.layout.activity_selectedimage);
                 Bitmap image = BitmapFactory.decodeFile(imagePath);
                 ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
                 imageView.setImageBitmap(image);
+                setImage(image);
                 homeClick();
                 commentClick();
                 sendClick();
+                 */
 
             }
             catch (FileNotFoundException e){
@@ -180,6 +179,14 @@ public class MainActivity extends Activity{
         }
     };
 
+    public static Bitmap getImage(){
+        return selectedimage;
+    }
+
+    public void setImage(Bitmap image){
+        selectedimage = image;
+    }
+
     private static File getOutputMediaFile(int type){
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Tester");
         if(!mediaStorageDir.exists()){
@@ -187,7 +194,6 @@ public class MainActivity extends Activity{
                 Log.d("Tester", "failed to create directory");
                 return null;
             }
-
         }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -200,34 +206,6 @@ public class MainActivity extends Activity{
             return null;
 
         return mediaFile;
-    }
-
-    public void homeClick(){
-        ImageButton home = (ImageButton)findViewById(R.id.returnhome);
-        home.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
-            }
-        });
-    }
-
-    public void commentClick(){
-        ImageButton comment = (ImageButton)findViewById(R.id.addcomment);
-        comment.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View arg0){
-                //Dialog dialog = new Dialog(context);
-            }
-        });
-    }
-
-    public void sendClick(){
-        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                startActivity(new Intent(MainActivity.this, PhotoInfoFragment.class));
-            }
-        });
     }
 
     protected void onStart(){

@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 public class PhotoInfoFragment extends FragmentActivity{
     String grade;
     String subject;
+    Bitmap selectedImage;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,16 +97,25 @@ public class PhotoInfoFragment extends FragmentActivity{
 
     }
 
-    private void saveImageToParse(){
-        Bitmap selectedImage = AccessGalleryActivity.getImage();
+    private void saveImageToParse() {
+        /**
+        if (SelectedImageFragment.getImage() == null) {
+            selectedImage = AccessGalleryActivity.getImage();
+        }
+        else {
+            selectedImage = SelectedImageFragment.getImage();
+        }
+         */
+        selectedImage = SelectedImageFragment.getImage();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte [] bytearray = stream.toByteArray();
-
+        byte[] bytearray = stream.toByteArray();
         ParseObject x = new ParseObject("ReceivedPictures");
         x.put("mediatype", "image");
-        if (bytearray != null){
-            ParseFile file = new ParseFile("TestPic", bytearray);
+        x.put("grade", grade);
+        x.put("subject", subject);
+        if (bytearray != null) {
+            ParseFile file = new ParseFile("Picture", bytearray);
             file.saveInBackground();
             x.put("TestPic1", file);
         }
@@ -113,11 +123,11 @@ public class PhotoInfoFragment extends FragmentActivity{
     }
 
     protected void onPause(){
-
+        super.onPause();
     }
 
     protected void onResume(){
-
+        super.onResume();
     }
 
     protected void onRestart(){
