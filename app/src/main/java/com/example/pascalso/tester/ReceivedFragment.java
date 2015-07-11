@@ -1,27 +1,20 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.parse.GetCallback;
-import com.parse.GetDataCallback;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.text.ParseException;
 
 /**
  * Created by owner on 7/2/15.
  */
 public class ReceivedFragment extends Activity {
-
+    private ParseFile image;
     ListView listView;
 
     protected void onCreate(Bundle savedInstanceState){
@@ -44,30 +37,9 @@ public class ReceivedFragment extends Activity {
             }
         });
     }
-/**
     private void retrieveImage(){
-        ParseQuery query = new ParseQuery("ImageTester");
-        query.getInBackground("AN_OBJECT_HERE", new GetCallback(){
-            public void done(ParseObject object, ParseException e){
-                if(object == null){
-                    Log.d("test", "the object was not found");
-                }
-                else{
-                    Log.d("test", "received object");
-                    ParseFile fileObject = (ParseFile) object.get("images");
-                    fileObject.getDataInBackground(new GetDataCallback() {
-                        public void done(byte[] bytes, com.parse.ParseException e) {
-                            if(e == null){
-                                Log.d("test", "we've got data in data");
-                            }
-                            else{
-                                Log.d("test", "There was a problem downloading the data");
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }*/
+        ParseObject x = new ParseObject("ReceivedPictures");
+        image = x.getParseFile("TestPic1");
+    }
 
 }

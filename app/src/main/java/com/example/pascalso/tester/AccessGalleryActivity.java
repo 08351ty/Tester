@@ -8,9 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
 /**
  * Created by owner on 6/26/15.
@@ -27,7 +24,7 @@ public class AccessGalleryActivity extends Activity {
     private void dispatchGalleryIntent(){
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         if(galleryIntent.resolveActivity(getPackageManager()) != null)
-            startActivityForResult(galleryIntent, REQUEST_GALLERY);
+             startActivityForResult(galleryIntent, REQUEST_GALLERY);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
