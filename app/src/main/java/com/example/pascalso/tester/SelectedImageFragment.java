@@ -23,7 +23,6 @@ public class SelectedImageFragment extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectedimage);
         drawImage();
-        setImage(MainActivity.getImage());
         homeClick();
         sendClick();
         commentClick();
@@ -31,7 +30,18 @@ public class SelectedImageFragment extends FragmentActivity {
 
     private void drawImage(){
         ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
-        imageView.setImageBitmap(MainActivity.getImage());
+        int callingActivity = getIntent().getIntExtra("calling-activity", 0);
+        switch (callingActivity){
+            case ActivityConstants.MAIN_ACTIVITY:
+                imageView.setImageBitmap(MainActivity.getImage());
+                selectedimage = MainActivity.getImage();
+                break;
+            case ActivityConstants.ACCESS_GALLERY_ACTIVITY:
+                imageView.setImageBitmap(AccessGalleryActivity.getImage());
+                selectedimage = AccessGalleryActivity.getImage();
+                break;
+        }
+
     }
 
     public void homeClick(){
@@ -62,11 +72,8 @@ public class SelectedImageFragment extends FragmentActivity {
         });
     }
 
-    private void setImage(Bitmap image){
-        selectedimage = image;
-    }
-
     public static Bitmap getImage(){
         return selectedimage;
     }
+
 }

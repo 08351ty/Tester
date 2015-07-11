@@ -16,7 +16,7 @@ import android.widget.ImageView;
  * Created by owner on 6/26/15.
  */
 public class AccessGalleryActivity extends Activity {
-    public static Bitmap image;
+    private static Bitmap image;
     private int REQUEST_GALLERY = 2;
 
     public void onCreate(Bundle savedInstanceState){
@@ -40,12 +40,17 @@ public class AccessGalleryActivity extends Activity {
         String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
         cursor.close();
         image = BitmapFactory.decodeFile(imagePath);
+        Intent startSelectedImageFragment = new Intent(AccessGalleryActivity.this, SelectedImageFragment.class);
+        startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.ACCESS_GALLERY_ACTIVITY);
+        startActivity(startSelectedImageFragment);
+        /**
         setContentView(R.layout.activity_selectedimage);
         ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
         imageView.setImageBitmap(image);
         homeClick();
         commentClick();
         sendClick();
+         */
         //startActivity(new Intent(AccessGalleryActivity.this, SelectedImageFragment.class));
         //Make onActivityResult start SelectedImageFragment activity, put image processing in SelectedImageFragment
         //}

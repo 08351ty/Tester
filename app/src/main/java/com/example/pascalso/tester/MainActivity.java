@@ -155,9 +155,11 @@ public class MainActivity extends Activity{
                 MainActivity.this.sendBroadcast(new Intent(
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
                         .parse("file://" + imagePath)));
-                Bitmap image = BitmapFactory.decodeFile(imagePath);
-                setImage(image);
-                startActivity(new Intent(MainActivity.this, SelectedImageFragment.class));
+                selectedimage = BitmapFactory.decodeFile(imagePath);
+                setImage(selectedimage);
+                Intent startSelectedImageFragment = new Intent(MainActivity.this, SelectedImageFragment.class);
+                startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.MAIN_ACTIVITY);
+                startActivity(startSelectedImageFragment);
                 /**
                 setContentView(R.layout.activity_selectedimage);
                 Bitmap image = BitmapFactory.decodeFile(imagePath);

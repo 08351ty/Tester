@@ -106,6 +106,7 @@ public class PhotoInfoFragment extends FragmentActivity{
             selectedImage = SelectedImageFragment.getImage();
         }
          */
+
         selectedImage = SelectedImageFragment.getImage();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
