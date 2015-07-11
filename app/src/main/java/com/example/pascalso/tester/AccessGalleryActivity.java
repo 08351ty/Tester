@@ -43,48 +43,7 @@ public class AccessGalleryActivity extends Activity {
         Intent startSelectedImageFragment = new Intent(AccessGalleryActivity.this, SelectedImageFragment.class);
         startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.ACCESS_GALLERY_ACTIVITY);
         startActivity(startSelectedImageFragment);
-        /**
-        setContentView(R.layout.activity_selectedimage);
-        ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
-        imageView.setImageBitmap(image);
-        homeClick();
-        commentClick();
-        sendClick();
-         */
-        //startActivity(new Intent(AccessGalleryActivity.this, SelectedImageFragment.class));
-        //Make onActivityResult start SelectedImageFragment activity, put image processing in SelectedImageFragment
-        //}
     }
-
-    public void homeClick(){
-        ImageButton home = (ImageButton)findViewById(R.id.returnhome);
-        home.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                startActivity(new Intent(AccessGalleryActivity.this, MainActivity.class));
-            }
-        });
-    }
-
-    public void commentClick(){
-        ImageButton comment = (ImageButton)findViewById(R.id.addcomment);
-        comment.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View arg0){
-                //Dialog dialog = new Dialog(context);
-            }
-        });
-    }
-
-    public void sendClick(){
-        ImageButton send = (ImageButton) findViewById(R.id.sendimage);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                startActivity(new Intent(AccessGalleryActivity.this, PhotoInfoFragment.class));
-            }
-        });
-    }
-
-
 
     public void onPause(){
         super.onPause();

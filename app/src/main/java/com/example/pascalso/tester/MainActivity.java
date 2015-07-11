@@ -13,17 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.view.SurfaceHolder;
-
-import com.parse.Parse;
-import com.parse.ParseObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,39 +27,19 @@ public class MainActivity extends Activity{
     private Camera mCamera;
     public CameraPreviewFragment mCameraPreviewFragment;
     public String mCurrentPhotoPath;
-    public OnSwipeTouchListener onSwipeTouchListener;
     private static Bitmap selectedimage;
-    private int REQUEST_IMAGE_CAPTURE = 1;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
-    private static final int RESULT_LOAD_IMAGE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Parse.enableLocalDatastore(this);
-        //Parse.initialize(this, "OlKO7GclrmS2MLdwK2Av7puo7T2LcS67w7BiI2ye", "6PpmXqQlWrMlXHnwoJrhfZn7oRRebGTwzksyR4ej");
         createCameraPreview();
         takepicClick();
         galleryClick();
         receivedClick();
 
-
-        //Testing Parse Cloud data
-
-
-        /**
-         mViewPager = (ViewPager) findViewById(R.id.pager);                 Create the layout where left right swipe brings user to different interfaces
-         mViewPager.setOnPageChangeListener(
-         new ViewPager.SimpleOnPageChangeListener() {
-        @Override public void onPageSelected(int position) {
-        // When swiping between pages, select the
-        // corresponding tab.
-        getActionBar().setSelectedNavigationItem(position);
-        }
-        });
-         */
     }
     private Camera getCameraInstance(){
         Camera camera= null;
@@ -160,17 +129,6 @@ public class MainActivity extends Activity{
                 Intent startSelectedImageFragment = new Intent(MainActivity.this, SelectedImageFragment.class);
                 startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.MAIN_ACTIVITY);
                 startActivity(startSelectedImageFragment);
-                /**
-                setContentView(R.layout.activity_selectedimage);
-                Bitmap image = BitmapFactory.decodeFile(imagePath);
-                ImageView imageView = (ImageView) findViewById(R.id.selectedimage);
-                imageView.setImageBitmap(image);
-                setImage(image);
-                homeClick();
-                commentClick();
-                sendClick();
-                 */
-
             }
             catch (FileNotFoundException e){
                 Log.d("TAG", "File not found" + e.getMessage());

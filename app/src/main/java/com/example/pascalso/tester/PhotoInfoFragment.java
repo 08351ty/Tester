@@ -25,7 +25,7 @@ import java.io.ByteArrayOutputStream;
 public class PhotoInfoFragment extends FragmentActivity{
     String grade;
     String subject;
-    String working;
+    String working = "no";
     Bitmap selectedImage;
 
 
