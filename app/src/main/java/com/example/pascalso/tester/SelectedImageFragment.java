@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -33,6 +34,7 @@ public class SelectedImageFragment extends FragmentActivity {
         int callingActivity = getIntent().getIntExtra("calling-activity", 0);
         switch (callingActivity){
             case ActivityConstants.MAIN_ACTIVITY:
+                imageView.setRotation(90);
                 imageView.setImageBitmap(MainActivity.getImage());
                 selectedimage = MainActivity.getImage();
                 break;

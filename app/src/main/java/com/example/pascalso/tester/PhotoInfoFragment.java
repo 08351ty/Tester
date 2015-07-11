@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.parse.ParseFile;
@@ -22,13 +25,16 @@ import java.io.ByteArrayOutputStream;
 public class PhotoInfoFragment extends FragmentActivity{
     String grade;
     String subject;
+    String working;
     Bitmap selectedImage;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
         selectSubject();
         selectGrade();
+        showWorking();
         sendPic();
 
     }
@@ -115,6 +121,7 @@ public class PhotoInfoFragment extends FragmentActivity{
         x.put("mediatype", "image");
         x.put("grade", grade);
         x.put("subject", subject);
+        x.put("working", working);
         if (bytearray != null) {
             ParseFile file = new ParseFile("Picture", bytearray);
             file.saveInBackground();
@@ -135,5 +142,13 @@ public class PhotoInfoFragment extends FragmentActivity{
 
     }
 
-
+    private void showWorking(){
+        Switch showWorkingSwitch = (Switch) findViewById(R.id.switch1);
+        showWorkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
+                if(isChecked) working = "yes";
+                else working = "no";
+            }
+        });
+    }
 }
