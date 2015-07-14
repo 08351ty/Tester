@@ -27,13 +27,22 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ReceivedFragment"/>
+        <activity
+            android:name=".ReceivedFragment"
+            android:uiOptions="splitActionBarWhenNarrow">
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow"
+            />
+        </activity>
 
         <activity android:name=".SelectedImageFragment"/>
 
         <activity android:name=".AccessGalleryActivity"/>
 
         <activity android:name=".PhotoInfoFragment"/>
+
+        <activity android:name=".TabbedActivityFragment"/>
 
     </application>
 

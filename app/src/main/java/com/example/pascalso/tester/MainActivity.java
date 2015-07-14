@@ -35,6 +35,7 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getActionBar().hide();
         createCameraPreview();
         takepicClick();
         galleryClick();
@@ -91,7 +92,7 @@ public class MainActivity extends Activity{
         ImageButton received = (ImageButton)findViewById(R.id.received);
         received.setOnClickListener(new OnClickListener(){
             public void onClick(View arg0){
-                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
+                startActivity(new Intent(MainActivity.this, /*ReceivedFragment.class*/ TabbedActivityFragment.class));
             }
         });
     }
