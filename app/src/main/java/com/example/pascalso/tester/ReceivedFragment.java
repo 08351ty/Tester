@@ -1,14 +1,15 @@
 package com.example.pascalso.tester;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.parse.ParseFile;
-import com.parse.ParseObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by owner on 7/2/15.
@@ -16,29 +17,34 @@ import com.parse.ParseObject;
 public class ReceivedFragment extends Activity {
     private ParseFile image;
     ListView listView;
+    Integer[] imgid = { R.drawable.ic_action_waiting, R.drawable.ic_action_done };
+    ArrayList<String> timecreated = new ArrayList<>();
+    ArrayList<String> subjects = new ArrayList<>();
+    ArrayList<ParseFile> photos = new ArrayList<>();
+    static ParseFile selectedimage;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        listView = (ListView) findViewById(R.id.receivedphotos);
-        String [] values = new String [] {"|Physics| Received: July 3","|Math| Received: July 2",
-                "|Math| Received: July 2", "|English| Received July 1","|Physics| Received: June 30","|Math| Received: June 15",
-                "|Math| Received: June 2", "|Economics| Received June 1", "|Physics| Received: May 30","|Math| Received: May 29",
-                "|Math| Received: May 26", "|Math| Received May 15"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        setContentView(R.layout.activity_received);
+        timecreated = SplashActivity.getTimeCreated();
+        subjects = SplashActivity.getSubjects();
+        photos = SplashActivity.getPhotos();
+        CustomListAdapter adapter = new CustomListAdapter(this, subjects, timecreated, imgid);
+        listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
-
-    }
-
-    protected void onListItemClick(ListView l, View v, int position, long id){
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                selectedimage = photos.get(+position);
+                startActivity(new Intent(ReceivedFragment.this, ViewPhoto.class));
             }
         });
     }
-    private void retrieveImage(){
-        ParseObject x = new ParseObject("ReceivedPictures");
-        image = x.getParseFile("TestPic1");
+
+    public static ParseFile getImage(){
+        return selectedimage;
     }
 }
+

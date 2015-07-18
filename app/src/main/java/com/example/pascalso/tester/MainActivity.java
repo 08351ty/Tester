@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends Activity{
@@ -30,13 +32,15 @@ public class MainActivity extends Activity{
     private static Bitmap selectedimage;
     private static final int MEDIA_TYPE_IMAGE = 3;
     private static final int MEDIA_TYPE_VIDEO = 4;
+    int width;
+    int height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getActionBar().hide();
         createCameraPreview();
+        //autoFocus();
         takepicClick();
         galleryClick();
         receivedClick();
@@ -46,6 +50,8 @@ public class MainActivity extends Activity{
         Camera camera= null;
         try {
             camera = Camera.open();
+            Camera.Parameters params = camera.getParameters();
+            List<Camera.Size> sizes = params.getSupportedPictureSizes();
         } catch (Exception e) {
             Log.d("ERROR", "Failed to get camera " + e.getMessage());
         }
@@ -60,6 +66,24 @@ public class MainActivity extends Activity{
             camera_preview.addView(mCameraPreviewFragment);
         }
         return mCameraPreviewFragment;
+    }
+
+    private Camera.Size getBiggestPictureSize(Camera.Parameters p) {
+        Camera.Size result = null;
+        for (Camera.Size size : p.getSupportedPictureSizes()) {
+            if (result == null) {
+                result = size;
+            } else {
+                int resultArea = result.width * result.height;
+                int newArea = size.width * size.height;
+                if (size.width == 1920 && size.height == 1080) {
+                    result = size;
+                    width = size.width;
+                    height = size.height;
+                }
+            }
+        }
+        return result;
     }
 
     private void galleryClick(){
@@ -82,6 +106,10 @@ public class MainActivity extends Activity{
 
                 }
                 if (photoFile != null) {
+                    Camera.Parameters p = mCamera.getParameters();
+                    Camera.Size sizePicture = (getBiggestPictureSize(p));
+                    p.setPictureSize(sizePicture.width, sizePicture.height);
+                    mCamera.setParameters(p);
                     mCamera.takePicture(null, null, mPicture);
                 }
             }
@@ -92,7 +120,7 @@ public class MainActivity extends Activity{
         ImageButton received = (ImageButton)findViewById(R.id.received);
         received.setOnClickListener(new OnClickListener(){
             public void onClick(View arg0){
-                startActivity(new Intent(MainActivity.this, /*ReceivedFragment.class*/ TabbedActivityFragment.class));
+                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
             }
         });
     }
@@ -126,7 +154,11 @@ public class MainActivity extends Activity{
                         Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
                         .parse("file://" + imagePath)));
                 selectedimage = BitmapFactory.decodeFile(imagePath);
-                setImage(selectedimage);
+                Matrix matrix = new Matrix();
+                matrix.postRotate(90);
+                Bitmap scaledBitmap = Bitmap.createScaledBitmap(selectedimage,width,height,true);
+                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+                setImage(rotatedBitmap);
                 Intent startSelectedImageFragment = new Intent(MainActivity.this, SelectedImageFragment.class);
                 startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.MAIN_ACTIVITY);
                 startActivity(startSelectedImageFragment);

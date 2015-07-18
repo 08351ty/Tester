@@ -17,51 +17,65 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static android.R.layout.simple_list_item_1;
 
 /**
  * Created by Pascal So on 7/13/2015.
  */
 public class SentFragment extends Fragment {
     ListView listView;
-    ParseObject receivedPictures = new ParseObject("ReceivedPictures");
+    ParseObject receivedPictures;
     ArrayList<String> values;
-    String subject;
+    ArrayList<ParseObject> parseObjects;
+    static String x;
+
 
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_sent, container, false);
-        //ListView listView = (ListView)rootView.findViewById(R.id.sentphotos);
-        //listView.setAdapter(new SentPhotoAdapter(getActivity(),sentPhoto));
-
-        //TabbedActivityFragment list = new TabbedActivityFragment();
-        //constructListView();
-        //ArrayList<String> values = new ArrayList<String>();
-        //populateValues();
         listView = (ListView) rootView.findViewById(R.id.list);
-        final ArrayList<String> values = new ArrayList<>();
-        ParseQuery <ParseObject> query = new ParseQuery<>("ReceivedPictures");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
+        ArrayList<String> values = new ArrayList<>();
+        final ArrayList<ParseObject> parseObjects = new ArrayList<>();
+        ParseQuery <ParseObject> query = ParseQuery.getQuery("ReceivedPictures");
+        query.whereEqualTo("mediatype", "image");
+        try {
+            List<ParseObject> photos = query.find();
+            parseObjects.addAll(photos);
+        } catch (ParseException e) {
+        }
+
+        /**query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> list, ParseException e) {
-                if(e == null){
-                    //Log.d("photos", "Retrieved " + list.size() + "photos");
-                    //String subject = receivedPictures.getString("subject");
+                if (e == null) {
+                    Log.d("photos", "Retrieved " + list.size() + "photos");
+                    //String subject = list.getString("subject");
                     //Date createdAt = receivedPictures.getCreatedAt();
                     //String date = createdAt.getMonth() + "/" + createdAt.getDay();
-                    subject = "hi";
+                    //values.addAll(list);
+                    //parseObjects.addAll(list);
+                    x = list.size();
+
                 }
                 else{
                     Log.d("photos", "Error" + e.getMessage());
                 }
             }
-        });
-        values.add(subject);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), simple_list_item_1, values);
+        });*/
+
+        int x = 0;
+        while ( x < parseObjects.size() - 1) {
+            String subject = parseObjects.get(x).getString("subject");
+            Date createdAt = parseObjects.get(x).getCreatedAt();
+            String date = createdAt.getMonth() + "/" + createdAt.getDay();
+            values.add(subject + ", " + date);
+            x++;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, values);
         listView.setAdapter(adapter);
+        //TextView numberofpicturessent = (TextView)rootView.findViewById(R.id.numberofpicturessent);
+        //numberofpicturessent.setText(x);
         return rootView;
     }
 

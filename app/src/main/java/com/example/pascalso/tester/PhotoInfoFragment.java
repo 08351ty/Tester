@@ -31,7 +31,6 @@ public class PhotoInfoFragment extends FragmentActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        getActionBar().hide();
         selectSubject();
         selectGrade();
         showWorking();

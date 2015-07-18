@@ -17,8 +17,10 @@ public class SelectedImageFragment extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
         setContentView(R.layout.activity_selectedimage);
-        getActionBar().hide();
         drawImage();
         homeClick();
         sendClick();
@@ -30,7 +32,6 @@ public class SelectedImageFragment extends FragmentActivity {
         int callingActivity = getIntent().getIntExtra("calling-activity", 0);
         switch (callingActivity){
             case ActivityConstants.MAIN_ACTIVITY:
-                imageView.setRotation(90);
                 imageView.setImageBitmap(MainActivity.getImage());
                 selectedimage = MainActivity.getImage();
                 break;
