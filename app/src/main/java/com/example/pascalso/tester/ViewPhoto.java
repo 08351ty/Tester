@@ -34,7 +34,7 @@ public class ViewPhoto extends FragmentActivity {
     }
 
     public void commentClick(){
-        ImageButton comment = (ImageButton) findViewById(R.id.comment);
+        ImageButton comment = (ImageButton)findViewById(R.id.comment);
 
     }
 }

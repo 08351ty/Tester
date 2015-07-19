@@ -46,6 +46,10 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             />
 
+        <activity android:name=".StudentInfo"/>
+
+        <activity android:name=".TutorInfo"/>
+
     </application>
 
 </manifest>

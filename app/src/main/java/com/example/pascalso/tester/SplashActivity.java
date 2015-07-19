@@ -51,13 +51,12 @@ public class SplashActivity extends Activity{
             settings.edit().putBoolean("my_first_time", false).commit();
         }*/
 
-        /**
+
         int x = 0;
         if(x == 0) {
             startActivity(new Intent(SplashActivity.this, NewUserActivity.class));
         }
         else {
-         */
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -87,7 +86,7 @@ public class SplashActivity extends Activity{
                     finish();
                 }
             }, 1000);
-        //}
+        }
     }
 
     protected void onDestroy(){

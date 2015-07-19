@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
+        <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/header"
@@ -17,6 +17,7 @@
             android:paddingBottom="5dp"
             android:orientation="horizontal"
             android:weightSum="1">
+
             <ImageView
                 android:layout_width="99dp"
                 android:layout_height="100dp"
@@ -24,7 +25,18 @@
                 android:scaleType="fitCenter"
                 android:id="@+id/logo"
                 android:layout_weight="0.17" />
-            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/right"
+                android:layout_width="26dp"
+                android:layout_height="27dp"
+                android:layout_gravity="center_vertical|end"
+                android:padding="50dp"
+                android:background="@drawable/ic_action_right"
+                />
+
+
+        </FrameLayout>
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,6 +45,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/header"
             android:id="@+id/linearLayout">
+
+            <EditText android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:hint="User Name"
+                android:id="@+id/username" />
 
             <EditText android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +70,7 @@
             <TextView android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#754f4952"
-                android:text="*If you want to solve problems, insert your university email."/>
+                android:text="*If you want to solve problems, use your university email."/>
 
             <!--  Password Label -->
 
@@ -65,17 +84,6 @@
                 android:id="@+id/password"/>
 
         </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirm"
-            android:id="@+id/confirmbutton"
-            android:layout_below="@+id/linearLayout"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

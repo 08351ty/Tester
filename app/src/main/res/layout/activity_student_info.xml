@@ -35,14 +35,14 @@
             android:id="@+id/linearLayout">
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/gradespinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/btn_dropdown"
                 android:spinnerMode="dropdown" />
 
             <Spinner
-                android:id="@+id/spinner2"
+                android:id="@+id/curriculumspinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/btn_dropdown"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Confirm"
-            android:id="@+id/saveinfobutton"
+            android:id="@+id/savestudentinfobutton"
             android:layout_below="@+id/linearLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
