@@ -7,14 +7,15 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 
@@ -26,11 +27,14 @@ public class PhotoInfoFragment extends FragmentActivity{
     String subject;
     String working = "no";
     Bitmap selectedImage;
+    String username;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        username = currentUser.getUsername();
         selectSubject();
         selectGrade();
         showWorking();
@@ -77,7 +81,7 @@ public class PhotoInfoFragment extends FragmentActivity{
     }
 
     public void sendPic(){
-        Button goButton = (Button) findViewById(R.id.gobutton);
+        FrameLayout goButton = (FrameLayout) findViewById(R.id.gobutton);
         goButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 if (grade.equals("--Select--") && subject.equals("--Select--")) {
@@ -90,9 +94,9 @@ public class PhotoInfoFragment extends FragmentActivity{
                     Toast.makeText(getApplicationContext(), "Please select your subject",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Your problem has been sent!",
-                            Toast.LENGTH_SHORT).show();
                     saveImageToParse();
+                    Toast.makeText(getApplicationContext(), username,
+                            Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(PhotoInfoFragment.this, MainActivity.class));
 
                 }
@@ -116,7 +120,7 @@ public class PhotoInfoFragment extends FragmentActivity{
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] bytearray = stream.toByteArray();
-        ParseObject x = new ParseObject("ReceivedPictures");
+        ParseObject x = new ParseObject(username);
         x.put("mediatype", "image");
         x.put("grade", grade);
         x.put("subject", subject);
@@ -124,7 +128,7 @@ public class PhotoInfoFragment extends FragmentActivity{
         if (bytearray != null) {
             ParseFile file = new ParseFile("Picture", bytearray);
             file.saveInBackground();
-            x.put("TestPic1", file);
+            x.put("ImageFile", file);
         }
         x.saveInBackground();
     }
@@ -138,7 +142,7 @@ public class PhotoInfoFragment extends FragmentActivity{
     }
 
     protected void onRestart(){
-
+        super.onRestart();
     }
 
     private void showWorking(){

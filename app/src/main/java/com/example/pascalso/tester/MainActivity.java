@@ -120,7 +120,7 @@ public class MainActivity extends Activity{
         ImageButton received = (ImageButton)findViewById(R.id.received);
         received.setOnClickListener(new OnClickListener(){
             public void onClick(View arg0){
-                startActivity(new Intent(MainActivity.this, ReceivedFragment.class));
+                startActivity(new Intent(MainActivity.this, StudentActivity.class));
             }
         });
     }

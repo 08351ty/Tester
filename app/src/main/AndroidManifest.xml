@@ -27,9 +27,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 
-        <activity android:name=".ReceivedFragment"/>
+        <activity android:name=".StudentActivity"/>
 
         <activity
             android:name=".SelectedImageFragment"
@@ -49,6 +51,10 @@
         <activity android:name=".StudentInfo"/>
 
         <activity android:name=".TutorInfo"/>
+
+        <activity android:name=".UserVerification"/>
+
+        <activity android:name=".LoginActivity"/>
 
     </application>
 

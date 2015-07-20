@@ -26,15 +26,6 @@
                 android:id="@+id/logo"
                 android:layout_weight="0.17" />
 
-            <ImageButton
-                android:id="@+id/right"
-                android:layout_width="26dp"
-                android:layout_height="27dp"
-                android:layout_gravity="center_vertical|end"
-                android:padding="50dp"
-                android:background="@drawable/ic_action_right"
-                />
-
         </FrameLayout>
 
         <LinearLayout
@@ -50,43 +41,33 @@
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
                 android:hint="User Name"
-                android:id="@+id/username"/>
-
-            <TextView android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#754f4952"
-                android:text="*Username must begin with a letter"/>
-
-            <EditText android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:singleLine="true"
-                android:hint="First Name"
-                android:id="@+id/firstname"
-                android:capitalize="sentences"/>
+                android:id="@+id/loginusername" />
 
             <EditText android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:singleLine="true"
-                android:hint="Email"
-                android:id="@+id/email" />
-
-            <TextView android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#754f4952"
-                android:text="*If you want to solve problems, use your university email."/>
-
-            <!--  Password Label -->
-
-            <EditText android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:singleLine="true"
-                android:password="true"
                 android:hint="Password"
-                android:id="@+id/password"/>
+                android:password="true"
+                android:id="@+id/loginpassword" />
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/login"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:orientation="horizontal"
+                android:weightSum="1" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Login To Existing Account"
+                android:gravity="center"
+                android:textSize="24sp" />
+
+            </FrameLayout>
 
         </LinearLayout>
 

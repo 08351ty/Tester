@@ -2,7 +2,6 @@ package com.example.pascalso.tester;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -10,6 +9,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,7 +28,6 @@ public class SplashActivity extends Activity{
     static ArrayList<String> timecreated = new ArrayList<>();
     static ArrayList<String> subjects = new ArrayList<>();
     static ArrayList<ParseFile> photos = new ArrayList<>();
-    final String PREFS_NAME = "MyPrefsFile";
     int day;
     int month;
     int hour;
@@ -37,31 +36,27 @@ public class SplashActivity extends Activity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 
         /**
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         if (settings.getBoolean("my_first_time", true)) {
             //the app is being launched for first time, do something
-            startActivity(new Intent(SplashActivity.this, NewUserActivity.class));
-            Log.d("Comments", "First time");
-
             // first time task
-
             // record the fact that the app has been started at least once
             settings.edit().putBoolean("my_first_time", false).commit();
-        }*/
-
-
-        int x = 0;
-        if(x == 0) {
-            startActivity(new Intent(SplashActivity.this, NewUserActivity.class));
+            Log.d("Comments", "First tim"e);
+            startActivity(new Intent(SplashActivity.this, UserVerification.class));
         }
-        else {
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("ReceivedPictures");
+         */
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                ParseUser user = ParseUser.getCurrentUser();
+                if(user == null){
+                    startActivity(new Intent(SplashActivity.this, UserVerification.class));
+                }
+                else{
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery(user.getUsername());
                     query.whereEqualTo("mediatype", "image");
                     try {
                         List<ParseObject> photos = query.find();
@@ -69,10 +64,10 @@ public class SplashActivity extends Activity{
                     } catch (ParseException e) {
                     }
                     int x = 0;
-                    while (x < parseObjects.size()) {
+                    while (x < parseObjects.size()){
                         String subject = parseObjects.get(x).getString("subject");
                         Date date = parseObjects.get(x).getCreatedAt();
-                        ParseFile photo = parseObjects.get(x).getParseFile("TestPic1");
+                        ParseFile photo = parseObjects.get(x).getParseFile("ImageFile");
                         subjects.add(subject);
                         dates.add(date);
                         photos.add(photo);
@@ -85,8 +80,29 @@ public class SplashActivity extends Activity{
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }
-            }, 1000);
-        }
+            }
+        }, 1000);
+    }
+
+
+    protected void onStart(){
+        super.onStart();
+    }
+
+    protected void onPause(){
+        super.onPause();
+    }
+
+    protected void onResume(){
+        super.onResume();
+    }
+
+    protected void onStop() {
+        super.onStop();
+    }
+
+    protected void onRestart(){
+        super.onRestart();
     }
 
     protected void onDestroy(){

@@ -49,7 +49,6 @@ public class CameraPreviewFragment extends SurfaceView implements SurfaceHolder.
         if(mHolder.getSurface() == null)
             return;
 
-
         try{
             mCamera.stopPreview();
         }

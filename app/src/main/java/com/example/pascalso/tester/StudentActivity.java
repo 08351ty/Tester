@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by owner on 7/2/15.
  */
-public class ReceivedFragment extends Activity {
+public class StudentActivity extends Activity {
     private ParseFile image;
     ListView listView;
     Integer[] imgid = { R.drawable.ic_action_waiting, R.drawable.ic_action_done };
@@ -25,7 +25,7 @@ public class ReceivedFragment extends Activity {
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_received);
+        setContentView(R.layout.activity_student);
         timecreated = SplashActivity.getTimeCreated();
         subjects = SplashActivity.getSubjects();
         photos = SplashActivity.getPhotos();
@@ -38,7 +38,7 @@ public class ReceivedFragment extends Activity {
                                     int position, long id) {
                 // TODO Auto-generated method stub
                 selectedimage = photos.get(+position);
-                startActivity(new Intent(ReceivedFragment.this, ViewPhoto.class));
+                startActivity(new Intent(StudentActivity.this, ViewPhoto.class));
             }
         });
     }

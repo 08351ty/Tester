@@ -12,12 +12,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
+import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 /**
  * Created by Pascal So on 7/17/2015.
@@ -40,20 +38,21 @@ public class NewUserActivity extends Activity {
         confirminfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText viewemail = (EditText) findViewById(R.id.email);
-                EditText viewpassword = (EditText) findViewById(R.id.password);
-                EditText viewusername = (EditText) findViewById(R.id.username);
-                EditText viewfirstname = (EditText) findViewById(R.id.firstname);
-                email = viewemail.getText().toString();
-                password = viewpassword.getText().toString();
-                firstname = viewfirstname.getText().toString();
-                username = viewusername.getText().toString();
-                String verification = email.substring(email.length() - 3);
-                if (verification.equals("edu")) {
-                    startActivity(new Intent(NewUserActivity.this, TutorInfo.class));
-                } else {
-                    startActivity(new Intent(NewUserActivity.this, StudentInfo.class));
-                }
+
+                    EditText viewemail = (EditText) findViewById(R.id.email);
+                    EditText viewpassword = (EditText) findViewById(R.id.password);
+                    EditText viewusername = (EditText) findViewById(R.id.username);
+                    EditText viewfirstname = (EditText) findViewById(R.id.firstname);
+                    email = viewemail.getText().toString();
+                    password = viewpassword.getText().toString();
+                    firstname = viewfirstname.getText().toString();
+                    username = viewusername.getText().toString();
+                    String verification = email.substring(email.length() - 3);
+                    if (verification.equals("edu")) {
+                        startActivity(new Intent(NewUserActivity.this, TutorInfo.class));
+                    } else {
+                        startActivity(new Intent(NewUserActivity.this, StudentInfo.class));
+                    }
             }
         });
     }
@@ -63,12 +62,14 @@ public class NewUserActivity extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
+                    EditText viewusername = (EditText) findViewById(R.id.username);
+                    username = viewusername.getText().toString();
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("username", username);
-                    query.findInBackground(new FindCallback<ParseUser>() {
-                        public void done(List<ParseUser> objects, ParseException e) {
+                    query.countInBackground(new CountCallback(){
+                        public void done(int count, ParseException e) {
                             if (e == null){
-                                if(objects.size() != 0){
+                                if(count != 0){
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
                                     alertDialog.setTitle("Username Taken");
                                     alertDialog.setMessage("This Username has already been taken. Please choose another Username.");
@@ -80,17 +81,28 @@ public class NewUserActivity extends Activity {
                                     alertDialog.show();
                                 }
                                 else{
-                                    Toast.makeText(getApplicationContext(), "ParseUser size = 0",
-                                            Toast.LENGTH_SHORT).show();
+                                    char c = username.charAt(0);
+                                    if(Character.isLetter(c)){
+                                    }
+                                    else{
+                                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
+                                        alertDialog.setTitle("Username");
+                                        alertDialog.setMessage("Your username must start with a letter");
+                                        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                        alertDialog.show();
+                                    }
                                 }
                             }
                             else{
                                 Log.e("Error", e.getMessage());
-                                Toast.makeText(getApplicationContext(), "Your problem has been sent!",
+                                Toast.makeText(getApplicationContext(), "There has been an error",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
-
                     });
                 }
             }
@@ -99,24 +111,40 @@ public class NewUserActivity extends Activity {
 
     private void checkEmail(){
         ((EditText)findViewById(R.id.email)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
+                    EditText viewemail = (EditText) findViewById(R.id.email);
+                    String email = viewemail.getText().toString();
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("email", email);
-                    query.findInBackground(new FindCallback<ParseUser>(){
-                        public void done(List<ParseUser> objects, ParseException e){
-                            if(e != null){
-                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
-                                alertDialog.setTitle("Email used");
-                                alertDialog.setMessage("This Email is already in use. Have you already created an account?");
-                                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                                alertDialog.show();
+                    query.countInBackground(new CountCallback(){
+                        public void done(int count, ParseException e) {
+                            if (e == null) {
+                                if (count != 0) {
+                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
+                                    alertDialog.setTitle("Email used");
+                                    alertDialog.setMessage("This Email is already in use. Have you already created an account?");
+                                    alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            startActivity(new Intent(NewUserActivity.this, LoginActivity.class));
+                                        }
+                                    });
+                                    alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener(){
+                                        public void onClick(DialogInterface dialog, int which){
+                                            dialog.cancel();
+                                        }
+                                    });
+                                    alertDialog.show();
+                                } else{
+                                    Toast.makeText(getApplicationContext(), "ParseUser size = 0",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+                                Log.e("Error", e.getMessage());
+                                Toast.makeText(getApplicationContext(), "There has been an error",
+                                        Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -160,7 +188,6 @@ public class NewUserActivity extends Activity {
         viewpassword.setText(password, TextView.BufferType.EDITABLE);
         viewusername.setText(username, TextView.BufferType.EDITABLE);
         viewfirstname.setText(firstname, TextView.BufferType.EDITABLE);
-
     }
 
     protected void onStop() { super.onStop(); }
@@ -169,6 +196,5 @@ public class NewUserActivity extends Activity {
 
     protected void onRestart(){
         super.onRestart();
-
     }
 }

@@ -6,7 +6,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.pascalso.tester.ReceivedFragment"/>
+        className = "com.example.pascalso.tester.StudentActivity"/>
       <point      
         x = "500"      
         y = "1480"/>

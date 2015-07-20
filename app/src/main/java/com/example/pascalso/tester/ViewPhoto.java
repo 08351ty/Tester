@@ -28,7 +28,7 @@ public class ViewPhoto extends FragmentActivity {
 
     private void drawImage() throws ParseException {
         ImageView imageView = (ImageView) findViewById(R.id.viewphoto);
-        byte[] bitmapdata = ReceivedFragment.getImage().getData();
+        byte[] bitmapdata = StudentActivity.getImage().getData();
         Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
         imageView.setImageBitmap(bitmap);
     }
