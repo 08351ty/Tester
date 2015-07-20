@@ -38,7 +38,6 @@ public class NewUserActivity extends Activity {
         confirminfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     EditText viewemail = (EditText) findViewById(R.id.email);
                     EditText viewpassword = (EditText) findViewById(R.id.password);
                     EditText viewusername = (EditText) findViewById(R.id.username);
@@ -87,7 +86,7 @@ public class NewUserActivity extends Activity {
                                     else{
                                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
                                         alertDialog.setTitle("Username");
-                                        alertDialog.setMessage("Your username must start with a letter");
+                                        alertDialog.setMessage("Your username must start with a letter.");
                                         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.cancel();
@@ -115,7 +114,7 @@ public class NewUserActivity extends Activity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     EditText viewemail = (EditText) findViewById(R.id.email);
-                    String email = viewemail.getText().toString();
+                    email = viewemail.getText().toString();
                     ParseQuery<ParseUser> query = ParseUser.getQuery();
                     query.whereEqualTo("email", email);
                     query.countInBackground(new CountCallback(){
@@ -123,7 +122,7 @@ public class NewUserActivity extends Activity {
                             if (e == null) {
                                 if (count != 0) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
-                                    alertDialog.setTitle("Email used");
+                                    alertDialog.setTitle("Email In Use");
                                     alertDialog.setMessage("This Email is already in use. Have you already created an account?");
                                     alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
@@ -137,8 +136,18 @@ public class NewUserActivity extends Activity {
                                     });
                                     alertDialog.show();
                                 } else{
-                                    Toast.makeText(getApplicationContext(), "ParseUser size = 0",
-                                            Toast.LENGTH_SHORT).show();
+                                    if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                                    {
+                                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
+                                        alertDialog.setTitle("Invalid Email");
+                                        alertDialog.setMessage("Please enter a valid email.");
+                                        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startActivity(new Intent(NewUserActivity.this, LoginActivity.class));
+                                            }
+                                        });
+                                        alertDialog.show();
+                                    }
                                 }
                             }
                             else{

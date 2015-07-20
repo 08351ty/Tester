@@ -65,7 +65,9 @@ public class TutorInfo extends Activity{
         super.onResume();
     }
 
-    protected void onStop() { super.onStop(); }
+    protected void onStop() {
+        super.onStop();
+    }
 
     protected void onDestroy() { super.onDestroy(); }
 

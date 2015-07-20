@@ -36,6 +36,7 @@ public class SplashActivity extends Activity{
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        //ParseUser.logOut();
 
         /**
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
