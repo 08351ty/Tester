@@ -48,6 +48,7 @@ public class PhotoInfoFragment extends FragmentActivity{
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         dropdown.setAdapter(adapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Object item = parent.getItemAtPosition(position);
@@ -55,8 +56,7 @@ public class PhotoInfoFragment extends FragmentActivity{
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onNothingSelected(AdapterView<?> parent){
             }
         });
     }
@@ -98,12 +98,9 @@ public class PhotoInfoFragment extends FragmentActivity{
                     Toast.makeText(getApplicationContext(), username,
                             Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(PhotoInfoFragment.this, MainActivity.class));
-
                 }
-
             }
         });
-
     }
 
     private void saveImageToParse() {

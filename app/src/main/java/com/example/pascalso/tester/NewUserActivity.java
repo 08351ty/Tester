@@ -16,6 +16,7 @@ import com.parse.CountCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 /**
  * Created by Pascal So on 7/17/2015.
@@ -38,20 +39,47 @@ public class NewUserActivity extends Activity {
         confirminfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    EditText viewemail = (EditText) findViewById(R.id.email);
-                    EditText viewpassword = (EditText) findViewById(R.id.password);
-                    EditText viewusername = (EditText) findViewById(R.id.username);
-                    EditText viewfirstname = (EditText) findViewById(R.id.firstname);
-                    email = viewemail.getText().toString();
-                    password = viewpassword.getText().toString();
-                    firstname = viewfirstname.getText().toString();
-                    username = viewusername.getText().toString();
-                    String verification = email.substring(email.length() - 3);
-                    if (verification.equals("edu")) {
-                        startActivity(new Intent(NewUserActivity.this, TutorInfo.class));
-                    } else {
-                        startActivity(new Intent(NewUserActivity.this, StudentInfo.class));
+                EditText viewemail = (EditText) findViewById(R.id.email);
+                EditText viewpassword = (EditText) findViewById(R.id.password);
+                EditText viewusername = (EditText) findViewById(R.id.username);
+                EditText viewfirstname = (EditText) findViewById(R.id.firstname);
+                email = viewemail.getText().toString();
+                password = viewpassword.getText().toString();
+                firstname = viewfirstname.getText().toString();
+                username = viewusername.getText().toString();
+                final String verification = email.substring(email.length() - 3);
+                ParseUser user = new ParseUser();
+                user.setUsername(username);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.put("firstname", firstname);
+
+                //user.put("college", viewcollege.getText().toString());
+                user.signUpInBackground(new SignUpCallback(){
+                    @Override
+                    public void done(ParseException e){
+                        if (e == null) {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewUserActivity.this);
+                            alertDialog.setTitle("Verify Email");
+                            alertDialog.setMessage("We've sent you an Email at " + email + ". Please take a second to verify your account");
+                            alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (verification.equals("edu")) {
+                                        startActivity(new Intent(NewUserActivity.this, TutorInfo.class));
+                                    } else {
+                                        startActivity(new Intent(NewUserActivity.this, StudentInfo.class));
+                                    }
+                                }
+                            });
+                            alertDialog.show();
+
+                        } else {
+                            Log.e("Error", e.getMessage());
+                        }
                     }
+
+                });
+
             }
         });
     }

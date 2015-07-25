@@ -50,11 +50,18 @@
 
         <activity android:name=".StudentInfo"/>
 
+        <activity android:name=".AnswerFragment"/>
+
         <activity android:name=".TutorInfo"/>
 
         <activity android:name=".UserVerification"/>
 
         <activity android:name=".LoginActivity"/>
+
+        <activity android:name=".CardView"/>
+
+        <activity android:name=".TutorActivity"/>
+
 
     </application>
 

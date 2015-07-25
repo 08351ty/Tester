@@ -12,6 +12,16 @@
 
     </FrameLayout>
 
+    <com.example.pascalso.tester.PreviewSurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/preview_surface" />
+
+    <com.example.pascalso.tester.DrawingView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/drawing_surface"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

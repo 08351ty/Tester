@@ -10,4 +10,5 @@ public interface ActivityConstants {
     public static final int RECEIVED_FRAGMENT = 1004;
     public static final int SELECTED_IMAGE_FRAGMENT = 1005;
     public static final int TUTOR_FRAGMENT = 1006;
+    public static final int SPLASH_ACTIVITY = 1007;
 }

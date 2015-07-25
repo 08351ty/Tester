@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.parse.ParseUser;
+
 /**
  * Created by owner on 7/2/15.
  */
@@ -40,7 +42,6 @@ public class SelectedImageFragment extends FragmentActivity {
                 selectedimage = AccessGalleryActivity.getImage();
                 break;
         }
-
     }
 
     public void homeClick(){
@@ -63,16 +64,25 @@ public class SelectedImageFragment extends FragmentActivity {
 
     public void sendClick(){
         ImageButton send = (ImageButton) findViewById(R.id.sendimage);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                startActivity(new Intent(SelectedImageFragment.this, PhotoInfoFragment.class));
-            }
-        });
+        ParseUser user = ParseUser.getCurrentUser();
+        if(user.get("usertype").equals("student")) {
+            send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    startActivity(new Intent(SelectedImageFragment.this, PhotoInfoFragment.class));
+                }
+            });
+        }
+        else{
+            send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0){
+                    startActivity(new Intent(SelectedImageFragment.this, AnswerFragment.class));
+                }
+            });
+        }
     }
-
     public static Bitmap getImage(){
         return selectedimage;
     }
-
 }

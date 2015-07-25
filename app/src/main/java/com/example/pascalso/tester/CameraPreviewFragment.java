@@ -1,12 +1,14 @@
 package com.example.pascalso.tester;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +18,9 @@ public class CameraPreviewFragment extends SurfaceView implements SurfaceHolder.
 
     private SurfaceHolder mHolder;
     private Camera mCamera;
+    private boolean listenerSet;
+    private boolean drawingViewSet;
+    //private DrawingView drawingView = new DrawingView(this, null);
 
     public CameraPreviewFragment(Context context, Camera camera){
         super(context);
@@ -113,4 +118,76 @@ public class CameraPreviewFragment extends SurfaceView implements SurfaceHolder.
         }
         return(result);
     }
+
+    Camera.AutoFocusCallback myAutoFocusCallback = new Camera.AutoFocusCallback() {
+
+        @Override
+        public void onAutoFocus(boolean arg0, Camera arg1) {
+            if (arg0) {
+                mCamera.cancelAutoFocus();
+            }
+        }
+    };
+
+    public void doTouchFocus(final Rect tfocusRect) {
+        try {
+            List<Camera.Area> focusList = new ArrayList<Camera.Area>();
+            Camera.Area focusArea = new Camera.Area(tfocusRect, 1000);
+            focusList.add(focusArea);
+            Camera.Parameters param = mCamera.getParameters();
+            param.setFocusAreas(focusList);
+            param.setMeteringAreas(focusList);
+            mCamera.setParameters(param);
+
+            mCamera.autoFocus(myAutoFocusCallback);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("error", "Unable to autofocus");
+        }
+    }
+
+
+    /**
+    public boolean onTouchEvent(MotionEvent event){
+        if(!listenerSet){
+            return false;
+        }
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            float x = event.getX();
+            float y = event.getY();
+            Rect rect = new Rect(
+                    (int)(x - 100),
+                    (int)(y - 100),
+                    (int)(x + 100),
+                    (int)(y + 100));
+
+            final Rect targetFocusRect = new Rect(
+                    rect.left * 2000/this.getWidth() - 1000,
+                    rect.top * 2000/this.getHeight() - 1000,
+                    rect.right * 2000/this.getWidth() - 1000,
+                    rect.bottom * 2000/this.getHeight() - 1000);
+
+            this.doTouchFocus(targetFocusRect);
+            if(drawingViewSet) {
+                drawingView.setHaveTouch(true, rect);
+                drawingView.invalidate();
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        drawingView.setHaveTouch(false, new Rect(0, 0, 0, 0));
+                        drawingView.invalidate();
+                    }
+                }, 1000);
+            }
+        }
+        return false;
+    }
+     */
+
+    public void setListener(){
+
+    }
+
 }

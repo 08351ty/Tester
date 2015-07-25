@@ -15,6 +15,8 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.parse.ParseUser;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,6 +28,9 @@ import java.util.List;
 
 public class MainActivity extends Activity{
 
+    private PreviewSurfaceView camView;
+    private CameraPreview cameraPreview;
+    private DrawingView drawingView;
     private Camera mCamera;
     public CameraPreviewFragment mCameraPreviewFragment;
     public String mCurrentPhotoPath;
@@ -44,8 +49,8 @@ public class MainActivity extends Activity{
         takepicClick();
         galleryClick();
         receivedClick();
-
     }
+
     private Camera getCameraInstance(){
         Camera camera= null;
         try {
@@ -63,6 +68,12 @@ public class MainActivity extends Activity{
         if(mCamera != null){
             mCameraPreviewFragment = new CameraPreviewFragment(this, mCamera);
             FrameLayout camera_preview = (FrameLayout) findViewById(R.id.camera_preview);
+            camera_preview.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    mCamera.autoFocus(null);
+                }
+            });
             camera_preview.addView(mCameraPreviewFragment);
         }
         return mCameraPreviewFragment;
@@ -95,14 +106,14 @@ public class MainActivity extends Activity{
         });
     }
 
-    private void takepicClick(){
-        ImageButton takepic = (ImageButton)findViewById(R.id.takepic);
-        takepic.setOnClickListener(new OnClickListener(){
-            public void onClick(View arg0){
+    private void takepicClick() {
+        ImageButton takepic = (ImageButton) findViewById(R.id.takepic);
+        takepic.setOnClickListener(new OnClickListener() {
+            public void onClick(View arg0) {
                 File photoFile = null;
                 try {
                     photoFile = createImageFile();
-                }catch (IOException e){
+                } catch (IOException e) {
 
                 }
                 if (photoFile != null) {
@@ -120,7 +131,14 @@ public class MainActivity extends Activity{
         ImageButton received = (ImageButton)findViewById(R.id.received);
         received.setOnClickListener(new OnClickListener(){
             public void onClick(View arg0){
-                startActivity(new Intent(MainActivity.this, StudentActivity.class));
+                ParseUser user = ParseUser.getCurrentUser();
+                String identity = user.getString("usertype");
+                if(identity.equals("tutor")){
+                    startActivity(new Intent(MainActivity.this, TutorActivity.class));
+                }
+                else {
+                    startActivity(new Intent(MainActivity.this, StudentActivity.class));
+                }
             }
         });
     }
@@ -197,8 +215,42 @@ public class MainActivity extends Activity{
             mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
         else
             return null;
-
         return mediaFile;
+    }
+
+    /**
+    protected void focusOnTouch(MotionEvent event) {
+        if (mCamera != null) {
+
+            mCamera.cancelAutoFocus();
+            Rect focusRect = calculateTapArea(event.getX(), event.getY(), 1f);
+            Rect meteringRect = calculateTapArea(event.getX(), event.getY(), 1.5f);
+
+            Camera.Parameters parameters = mCamera.getParameters();
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            parameters.setFocusAreas(Lists.newArrayList(new Camera.Area(focusRect, 1000)));
+
+
+            if (meteringAreaSupported) {
+                parameters.setMeteringAreas(Lists.newArrayList(new Camera.Area(meteringRect, 1000)));
+            }
+
+
+            mCamera.setParameters(parameters);
+            mCamera.autoFocus(this);
+        }
+    }*/
+
+
+
+    private int clamp(int x, int min, int max) {
+        if (x > max) {
+            return max;
+        }
+        if (x < min) {
+            return min;
+        }
+        return x;
     }
 
     protected void onStart(){

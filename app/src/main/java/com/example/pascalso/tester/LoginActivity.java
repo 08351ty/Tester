@@ -35,7 +35,7 @@ public class LoginActivity extends Activity {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {
                         if (parseUser != null){
-                            startActivity(new Intent(LoginActivity.this, SplashActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
                         else{
                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivity.this);

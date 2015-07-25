@@ -37,7 +37,6 @@ public class SplashActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         //ParseUser.logOut();
-
         /**
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         if (settings.getBoolean("my_first_time", true)) {
@@ -45,7 +44,7 @@ public class SplashActivity extends Activity{
             // first time task
             // record the fact that the app has been started at least once
             settings.edit().putBoolean("my_first_time", false).commit();
-            Log.d("Comments", "First tim"e);
+            Log.d("Comments", "First time");
             startActivity(new Intent(SplashActivity.this, UserVerification.class));
         }
          */
@@ -62,8 +61,9 @@ public class SplashActivity extends Activity{
                     try {
                         List<ParseObject> photos = query.find();
                         parseObjects.addAll(photos);
-                    } catch (ParseException e) {
+                    } catch (ParseException e){
                     }
+
                     int x = 0;
                     while (x < parseObjects.size()){
                         String subject = parseObjects.get(x).getString("subject");
@@ -147,7 +147,6 @@ public class SplashActivity extends Activity{
             }
             x++;
         }
-
     }
 
     public static ArrayList<String> getTimeCreated(){

@@ -70,7 +70,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jacoco" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaResources" />
@@ -88,10 +90,57 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="support-v4-22.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="commons-logging-api" level="project" />
+    <orderEntry type="library" exported="" name="xerceslmpl" level="project" />
+    <orderEntry type="library" exported="" name="axis-ant" level="project" />
     <orderEntry type="library" exported="" name="Parse-1.9.3" level="project" />
+    <orderEntry type="library" exported="" name="httpclient-cache-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="geronimo-activation_1.0.2_spec-1.2" level="project" />
+    <orderEntry type="library" exported="" name="saaj" level="project" />
+    <orderEntry type="library" exported="" name="jaxmexs-0.5.2" level="project" />
+    <orderEntry type="library" exported="" name="jaxme2-rt-0.5.2" level="project" />
+    <orderEntry type="library" exported="" name="aws-mturk-wsdl" level="project" />
+    <orderEntry type="library" exported="" name="commons-logging" level="project" />
+    <orderEntry type="library" exported="" name="commons-digester-1.8" level="project" />
+    <orderEntry type="library" exported="" name="velocity-1.5" level="project" />
+    <orderEntry type="library" exported="" name="commons-codec-1.4" level="project" />
+    <orderEntry type="library" exported="" name="jaxmejs-0.5.2" level="project" />
+    <orderEntry type="library" exported="" name="opencsv-1.8" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="wsdl4j" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections-3.2" level="project" />
+    <orderEntry type="library" exported="" name="xercesImpl" level="project" />
+    <orderEntry type="library" exported="" name="commons-httpclient-3.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.0" level="project" />
+    <orderEntry type="library" exported="" name="commons-beanutils" level="project" />
+    <orderEntry type="library" exported="" name="wstx-asl-3.2.3" level="project" />
+    <orderEntry type="library" exported="" name="httpcore-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="cardview-v7-21.0.3" level="project" />
+    <orderEntry type="library" exported="" name="httpmime-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="jaxmepm-0.5.2" level="project" />
+    <orderEntry type="library" exported="" name="commons-dbcp-1.2.2" level="project" />
+    <orderEntry type="library" exported="" name="log4j-1.2.15" level="project" />
+    <orderEntry type="library" exported="" name="aws-mturk-dataschema" level="project" />
+    <orderEntry type="library" exported="" name="resolver" level="project" />
+    <orderEntry type="library" exported="" name="velocity-tools-1.4" level="project" />
+    <orderEntry type="library" exported="" name="jaxrpc" level="project" />
+    <orderEntry type="library" exported="" name="xml-apis" level="project" />
+    <orderEntry type="library" exported="" name="commons-logging-1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="axis" level="project" />
+    <orderEntry type="library" exported="" name="dom4j-1.6.1" level="project" />
+    <orderEntry type="library" exported="" name="jaxmeapi-0.5.2" level="project" />
+    <orderEntry type="library" exported="" name="geronimo-javamail_1.3.1_spec-1.3" level="project" />
+    <orderEntry type="library" exported="" name="commons-discovery-0.2" level="project" />
+    <orderEntry type="library" exported="" name="jaxme2-0.5.2" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="commons-pool-1.3" level="project" />
+    <orderEntry type="library" exported="" name="commons-lang-2.3" level="project" />
+    <orderEntry type="library" exported="" name="commons-httpclient-contrib-3.1" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="httpclient-4.1.2" level="project" />
+    <orderEntry type="library" exported="" name="commons-collections-testframework-3.2" level="project" />
+    <orderEntry type="library" exported="" name="xalan" level="project" />
+    <orderEntry type="library" exported="" name="java-aws-mturk" level="project" />
   </component>
 </module>
