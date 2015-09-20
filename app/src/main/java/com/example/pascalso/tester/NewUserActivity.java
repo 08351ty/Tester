@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.parse.CountCallback;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -29,6 +30,7 @@ public class NewUserActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         confirmInfo();
         checkUsername();
         checkEmail();
@@ -65,8 +67,11 @@ public class NewUserActivity extends Activity {
                             alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (verification.equals("edu")) {
+                                        ParsePush.subscribeInBackground("Tutor");
                                         startActivity(new Intent(NewUserActivity.this, TutorInfo.class));
                                     } else {
+                                        //ParsePush.subscribeInBackground("Student");
+                                        ParsePush.subscribeInBackground(username);
                                         startActivity(new Intent(NewUserActivity.this, StudentInfo.class));
                                     }
                                 }
@@ -171,7 +176,6 @@ public class NewUserActivity extends Activity {
                                         alertDialog.setMessage("Please enter a valid email.");
                                         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-                                                startActivity(new Intent(NewUserActivity.this, LoginActivity.class));
                                             }
                                         });
                                         alertDialog.show();

@@ -1,9 +1,13 @@
 package com.example.pascalso.tester;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,6 +18,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -27,30 +32,37 @@ import java.util.List;
  * Created by owner on 7/2/15.
  */
 public class StudentActivity extends Activity {
-    ListView listView;
-    Integer[] imgid = { R.drawable.ic_action_waiting, R.drawable.ic_action_done };
-    ArrayList<String> timecreated = new ArrayList<>();
-    ArrayList<String> subjects = new ArrayList<>();
-    ArrayList<ParseFile> photos = new ArrayList<>();
-    ArrayList<ParseObject> parseObjects = new ArrayList<>();
-    static ArrayList<Date> dates = new ArrayList<>();
-    int minute;
-    int hour;
-    int day;
-    int month;
-
-    static ParseFile selectedimage;
-    String username;
+    private ListView listView;
+    private Integer[] imgid = { R.drawable.ic_action_waiting, R.drawable.ic_action_done };
+    private ArrayList<String> timecreated = new ArrayList<>();
+    private ArrayList<String> subjects = new ArrayList<>();
+    private ArrayList<ParseFile> photos = new ArrayList<>();
+    private ArrayList<ParseObject> parseObjects = new ArrayList<>();
+    private static ArrayList<Date> dates = new ArrayList<>();
+    private static ArrayList<String> answered = new ArrayList<>();
+    private static ArrayList<String> comments = new ArrayList<>();
+    private int minute;
+    private int hour;
+    private int day;
+    private int month;
+    private static ParseFile selectedimage;
+    private String username;
+    private static String comment;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Photos");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         ParseUser currentUser = ParseUser.getCurrentUser();
         username = currentUser.getUsername();
         timecreated = SplashActivity.getTimeCreated();
         subjects = SplashActivity.getSubjects();
         photos = SplashActivity.getPhotos();
-        CustomListAdapter adapter = new CustomListAdapter(this, subjects, timecreated, imgid);
+        answered = SplashActivity.getAnswers();
+        comments = SplashActivity.getComments();
+        CustomListStudentAdapter adapter = new CustomListStudentAdapter(this, subjects, timecreated, imgid, answered);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,7 +71,8 @@ public class StudentActivity extends Activity {
                                     int position, long id) {
                 // TODO Auto-generated method stub
                 selectedimage = photos.get(+position);
-                startActivity(new Intent(StudentActivity.this, ViewPhoto.class));
+                comment = comments.get(+position);
+                startActivity(new Intent(StudentActivity.this, StudentViewPhoto.class));
             }
         });
         autoUpdate();
@@ -69,8 +82,11 @@ public class StudentActivity extends Activity {
         return selectedimage;
     }
 
+    public static String getComment(){ return comment; }
+
     private void autoUpdate(){
-        final ParseQuery<ParseObject> query = ParseQuery.getQuery(username);
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("Questions");
+        query.whereEqualTo("username", username);
         query.countInBackground(new CountCallback() {
             @Override
             public void done(int i, ParseException e) {
@@ -84,10 +100,11 @@ public class StudentActivity extends Activity {
                                 subjects.clear();
                                 photos.clear();
                                 dates.clear();
+                                comments.clear();
                                 int x = 0;
                                 while (x < parseObjects.size()){
                                     String subject = parseObjects.get(x).getString("subject");
-                                    Date date = parseObjects.get(x).getCreatedAt();
+                                    Date date = parseObjects.get(x).getUpdatedAt();
                                     ParseFile photo = parseObjects.get(x).getParseFile("ImageFile");
                                     subjects.add(subject);
                                     dates.add(date);
@@ -98,7 +115,7 @@ public class StudentActivity extends Activity {
                                 Collections.reverse(dates);
                                 Collections.reverse(photos);
                                 compareDate();
-                                CustomListAdapter adapter = new CustomListAdapter(StudentActivity.this, subjects, timecreated, imgid);
+                                CustomListStudentAdapter adapter = new CustomListStudentAdapter(StudentActivity.this, subjects, timecreated, imgid, answered);
                                 listView = (ListView)findViewById(R.id.list);
                                 listView.setAdapter(adapter);
                                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,7 +124,7 @@ public class StudentActivity extends Activity {
                                                             int position, long id) {
                                         // TODO Auto-generated method stub
                                         selectedimage = photos.get(+position);
-                                        startActivity(new Intent(StudentActivity.this, ViewPhoto.class));
+                                        startActivity(new Intent(StudentActivity.this, StudentViewPhoto.class));
                                     }
                                 });
                             }
@@ -116,10 +133,6 @@ public class StudentActivity extends Activity {
                             }
                         }
                     });
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "wtf?",
-                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -162,6 +175,24 @@ public class StudentActivity extends Activity {
             x++;
         }
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.student_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.action_profile:
+                startActivity(new Intent(StudentActivity.this, UniversityList.class));
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(StudentActivity.this, PrefsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
 

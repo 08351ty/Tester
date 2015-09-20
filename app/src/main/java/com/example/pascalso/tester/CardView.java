@@ -12,12 +12,12 @@ import android.widget.TextView;
  * Created by Pascal So on 7/20/2015.
  */
 public class CardView extends Activity {
-
+/**
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cardview);
-        TextView captionTitle1 = (TextView) findViewById(R.id.mathtext);
-        ImageView imageView1 = (ImageView) findViewById(R.id.math);
+        TextView captionTitle1 = (TextView) findViewById(R.id.name1);
+        ImageView imageView1 = (ImageView) findViewById(R.id.headshot1);
         TextView captionTitle2 = (TextView) findViewById(R.id.physicstext);
         ImageView imageView2 = (ImageView) findViewById(R.id.physics);
 
@@ -34,4 +34,5 @@ public class CardView extends Activity {
         imageView1.setImageDrawable(gradientDrawable);
         imageView2.setImageDrawable(gradientDrawable);
     }
+ */
 }

@@ -9,60 +9,169 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!--
+      IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
+      to match your app's package name + ".permission.C2D_MESSAGE".
+    -->
+    <permission android:protectionLevel="signature"
+        android:name="com.example.pascalso.tester.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.example.pascalso.tester.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:name="com.example.pascalso.tester.Application"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:screenOrientation="nosensor">
         <activity
             android:name=".SplashActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".StudentActivity"/>
+        <activity android:name=".StudentActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity"/>
+        </activity>
 
-        <activity
-            android:name=".SelectedImageFragment"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <activity android:name=".SelectedImageFragment"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".AccessGalleryActivity"/>
+        <activity android:name=".AccessGalleryActivity"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".PhotoInfoFragment"/>
+        <activity android:name=".PhotoInfoFragment"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
 
-        <activity android:name=".NewUserActivity"/>
+        <activity android:name=".NewUserActivity"
+            android:parentActivityName=".UserVerification"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserVerification"/>
+        </activity>
 
-        <activity
-            android:name=".ViewPhoto"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            />
+        <activity android:name=".TutorViewPhoto"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".StudentInfo"/>
+        <activity android:name=".StudentInfo"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".AnswerFragment"/>
+        <activity android:name=".TutorInfo"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".TutorInfo"/>
+        <activity android:name=".UserVerification"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".UserVerification"/>
+        <activity android:name=".LoginActivity"
+            android:parentActivityName=".UserVerification"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserVerification"/>
+        </activity>
 
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".CardView"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".CardView"/>
+        <activity android:name=".TutorActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
 
-        <activity android:name=".TutorActivity"/>
+        <activity android:name=".UniversityList"
+            android:parentActivityName=".StudentActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StudentActivity"/>
+        </activity>
 
+        <activity android:name=".TutorCardView"
+            android:parentActivityName=".UniversityList"
+            android:screenOrientation="portrait">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".UniversityList"/>
+        </activity>
 
+        <activity android:name=".QuestionPick"
+            android:parentActivityName=".TutorActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TutorActivity"/>
+        </activity>
+
+        <activity android:name=".AnswerCapture"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ImageResponse"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ChoosePhotoFromGallery"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".StudentViewPhoto"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".PrefsActivity"
+            android:screenOrientation="portrait"/>
+
+        <service android:name="com.parse.PushService" />
+        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <!--
+                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
+                -->
+                <category android:name="com.example.pascalso.tester" />
+            </intent-filter>
+        </receiver>
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/pushicon"/>
     </application>
 
 </manifest>

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -45,7 +46,7 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createCameraPreview();
-        //autoFocus();
+        mCamera.autoFocus(null);
         takepicClick();
         galleryClick();
         receivedClick();
@@ -87,7 +88,7 @@ public class MainActivity extends Activity{
             } else {
                 int resultArea = result.width * result.height;
                 int newArea = size.width * size.height;
-                if (size.width == 1920 && size.height == 1080) {
+                if (size.width <= 1920 && size.height <= 1080 && size.width > width && size.height > height) {
                     result = size;
                     width = size.width;
                     height = size.height;
@@ -134,7 +135,9 @@ public class MainActivity extends Activity{
                 ParseUser user = ParseUser.getCurrentUser();
                 String identity = user.getString("usertype");
                 if(identity.equals("tutor")){
-                    startActivity(new Intent(MainActivity.this, TutorActivity.class));
+                    Intent tutorActivity = new Intent(MainActivity.this, TutorActivity.class);
+                    tutorActivity.putExtra("calling-activity", ActivityConstants.MAIN_ACTIVITY);
+                    startActivity(tutorActivity);
                 }
                 else {
                     startActivity(new Intent(MainActivity.this, StudentActivity.class));
@@ -255,6 +258,7 @@ public class MainActivity extends Activity{
 
     protected void onStart(){
         super.onStart();
+        mCamera.autoFocus(null);
     }
 
     protected void onPause(){
@@ -265,12 +269,18 @@ public class MainActivity extends Activity{
     protected void onResume(){
         super.onResume();
         mCamera.startPreview();
+        mCamera.autoFocus(null);
+    }
+
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
     protected void onRestart(){
         super.onRestart();
         setContentView(R.layout.activity_main);
         createCameraPreview();
+        mCamera.autoFocus(null);
         takepicClick();
         galleryClick();
         receivedClick();

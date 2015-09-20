@@ -14,7 +14,7 @@ import android.provider.MediaStore;
  */
 public class AccessGalleryActivity extends Activity {
     private static Bitmap image;
-    private int REQUEST_GALLERY = 2;
+    private int REQUEST_GALLERY = 1;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -29,26 +29,37 @@ public class AccessGalleryActivity extends Activity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        //if(requestCode == REQUEST_GALLERY && resultCode == MEDIA_TYPE_IMAGE){
-        Uri pickedImage = data.getData();
-        String[] filePath = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
-        cursor.moveToFirst();
-        String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
-        cursor.close();
-        image = BitmapFactory.decodeFile(imagePath);
-        Intent startSelectedImageFragment = new Intent(AccessGalleryActivity.this, SelectedImageFragment.class);
-        startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.ACCESS_GALLERY_ACTIVITY);
-        startActivity(startSelectedImageFragment);
+        if(requestCode == REQUEST_GALLERY && resultCode == RESULT_OK) {
+            Uri pickedImage = data.getData();
+            String[] filePath = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(pickedImage, filePath, null, null, null);
+            cursor.moveToFirst();
+            String imagePath = cursor.getString(cursor.getColumnIndex(filePath[0]));
+            cursor.close();
+            image = BitmapFactory.decodeFile(imagePath);
+            Intent startSelectedImageFragment = new Intent(AccessGalleryActivity.this, SelectedImageFragment.class);
+            startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.ACCESS_GALLERY_ACTIVITY);
+            startActivity(startSelectedImageFragment);
+            finish();
+        }
+        else{
+            onDestroy();
+            startActivity(new Intent(AccessGalleryActivity.this, MainActivity.class));
+
+        }
     }
 
-    public void onPause(){
+    protected void onPause(){
         super.onPause();
     }
 
-    public void onResume(){
+    protected void onResume(){
         super.onResume();
     }
+
+    protected void onStop() {super.onStop(); }
+
+    protected void onDestroy() {super.onDestroy(); }
 
     public static Bitmap getImage(){
         return image;

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listOptions">
+        <item>When a problem is posted</item>
+        <item>Daily</item>
+        <item>Every three days</item>
+        <item>Every week</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="listValues">
+        <item>1 is selected</item>
+        <item>2 is selected</item>
+        <item>3 is selected</item>
+        <item>4 is selected</item>
+        <item>5 is selected</item>
+    </string-array>
+</resources>

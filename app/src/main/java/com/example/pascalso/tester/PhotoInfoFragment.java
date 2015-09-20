@@ -2,8 +2,10 @@ package com.example.pascalso.tester;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,11 +15,20 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.List;
+
+import com.example.*;
 
 /**
  * Created by owner on 7/3/15.
@@ -28,6 +39,9 @@ public class PhotoInfoFragment extends FragmentActivity{
     String working = "no";
     Bitmap selectedImage;
     String username;
+    File imageFile;
+    ParseFile file;
+    private static String imageLink;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +70,7 @@ public class PhotoInfoFragment extends FragmentActivity{
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
     }
@@ -95,15 +109,21 @@ public class PhotoInfoFragment extends FragmentActivity{
                             Toast.LENGTH_SHORT).show();
                 } else {
                     saveImageToParse();
-                    Toast.makeText(getApplicationContext(), username,
+                    /**
+                    String [] args = {};
+
+                    BestImage bestImage = new BestImage();
+                    Toast.makeText(getApplicationContext(), bestImage.getHIT(),
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(PhotoInfoFragment.this, MainActivity.class));
+                     */
+
+                    //startActivity(new Intent(PhotoInfoFragment.this, MainActivity.class));
                 }
             }
         });
     }
 
-    private void saveImageToParse() {
+    private void saveImageToParse(){
         /**
         if (SelectedImageFragment.getImage() == null) {
             selectedImage = AccessGalleryActivity.getImage();
@@ -115,19 +135,63 @@ public class PhotoInfoFragment extends FragmentActivity{
 
         selectedImage = SelectedImageFragment.getImage();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] bytearray = stream.toByteArray();
-        ParseObject x = new ParseObject(username);
+        if (bytearray != null) {
+            file = new ParseFile("picture.png", bytearray);
+            file.saveInBackground();
+        }
+        ParseObject x = new ParseObject("Questions");
         x.put("mediatype", "image");
         x.put("grade", grade);
         x.put("subject", subject);
         x.put("working", working);
-        if (bytearray != null) {
-            ParseFile file = new ParseFile("Picture", bytearray);
-            file.saveInBackground();
-            x.put("ImageFile", file);
-        }
+        x.put("username", username);
+        x.put("ImageFile", file);
+        x.put("posted", false);
         x.saveInBackground();
+        setImageLink();
+        Toast.makeText(getApplicationContext(), imageLink,
+                Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(PhotoInfoFragment.this, MainActivity.class));
+    }
+
+    public File postImageToMTurk(){
+        selectedImage = SelectedImageFragment.getImage();
+        persistImage(selectedImage, "image file");
+        return imageFile;
+
+    }
+
+    private void persistImage(Bitmap bitmap, String name){
+        File filesdir = this.getFilesDir();
+        imageFile = new File(filesdir, name + "png");
+        OutputStream os;
+        try{
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+            os.flush();
+            os.close();
+        }
+        catch (Exception e){
+            Log.e(getClass().getSimpleName(), "Error compiling bitmap", e);
+        }
+    }
+
+    private void setImageLink(){
+        ParseQuery<ParseObject> query = new ParseQuery<>(username);
+        query.orderByDescending("updatedAt");
+        try {
+            ParseFile image = query.getFirst().getParseFile("ImageFile");
+            imageLink = image.getUrl();
+        }
+        catch(ParseException e) {
+            Log.d("ERROR", "could not find image");
+        }
+    }
+
+    public static String getImageLink(){
+        return imageLink;
     }
 
     protected void onPause(){
@@ -150,5 +214,11 @@ public class PhotoInfoFragment extends FragmentActivity{
                 else working = "no";
             }
         });
+    }
+
+    private class PublishHIT extends AsyncTask<String, Integer , String> {
+        protected String doInBackground(String... params){
+            return "";
+        }
     }
 }
