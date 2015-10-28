@@ -45,6 +45,7 @@ public class AccessGalleryActivity extends Activity {
         else{
             onDestroy();
             startActivity(new Intent(AccessGalleryActivity.this, MainActivity.class));
+            finish();
 
         }
     }

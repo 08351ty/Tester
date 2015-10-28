@@ -3,6 +3,8 @@ package com.example.pascalso.tester;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.PushService;
 
 /**
@@ -11,9 +13,11 @@ import com.parse.PushService;
 public class Application extends android.app.Application{
     public void onCreate(){
         super.onCreate();
+        Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(Message.class);
         Parse.initialize(this, "OlKO7GclrmS2MLdwK2Av7puo7T2LcS67w7BiI2ye", "6PpmXqQlWrMlXHnwoJrhfZn7oRRebGTwzksyR4ej");
         ParseInstallation.getCurrentInstallation().saveInBackground();
-        //PushService.setDefaultPushCallback(this, MainActivity.class);
+
 
         /**
         FontsOverride.setDefaultFont(this, "DEFAULT", "Lato-Thin.ttf");

@@ -130,27 +130,38 @@ public class QuestionPick extends Activity {
             calendar.setTime(dates.get(x));
             if(calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.DAY_OF_MONTH) == day){
                 int b = minute - calendar.get(Calendar.MINUTE);
-                if(b <= 1){
+                if(b < 2){
                     timecreated.add("Just now");
                 }
                 else{
                     timecreated.add(b + " minutes ago");
                 }
             }
-            else{
-                if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
-                    int c = hour - calendar.get(Calendar.HOUR_OF_DAY);
-                    if (c == 1) {
-                        timecreated.add(c + " hour ago");
+            else {
+                if(calendar.get(Calendar.MONTH) == month) {
+                    if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
+                        int c = hour - calendar.get(Calendar.HOUR_OF_DAY);
+                        if (c == 1) {
+                            timecreated.add(c + " hour ago");
+                        } else {
+                            timecreated.add(c + " hours ago");
+                        }
                     } else {
-                        timecreated.add(c + " hours ago");
+                        int d = day - calendar.get(Calendar.DAY_OF_MONTH);
+                        if (d == 1) {
+                            timecreated.add(d + " day ago");
+                        } else {
+                            timecreated.add(d + " days ago");
+                        }
                     }
-                } else {
-                    int d = day - calendar.get(Calendar.DAY_OF_MONTH);
-                    if (d == 1) {
-                        timecreated.add(d + " day ago");
-                    } else {
-                        timecreated.add(d + " days ago");
+                }
+                else {
+                    int e = month - calendar.get(Calendar.MONTH);
+                    if (e == 1) {
+                        timecreated.add(e + " month ago");
+                    }
+                    else{
+                        timecreated.add(e + " months ago");
                     }
                 }
             }

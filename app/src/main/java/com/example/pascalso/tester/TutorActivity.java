@@ -28,7 +28,6 @@ public class TutorActivity extends Activity {
         setContentView(R.layout.activity_gridlist);
         ParsePush.subscribeInBackground("Tutor");
         getActionBar().setTitle("Subject");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
         GridView gridview = (GridView)findViewById(R.id.gridview);
         gridview.setAdapter(new SubjectImageAdapter(this));
 
@@ -45,8 +44,6 @@ public class TutorActivity extends Activity {
                         break;
                 }
                 startActivity(new Intent(TutorActivity.this, QuestionPick.class));
-                Toast.makeText(TutorActivity.this, subjects[position],
-                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -66,12 +63,18 @@ public class TutorActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.tutor_activity_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
+            case R.id.action_camera:
+                startActivity(new Intent(TutorActivity.this, MainActivity.class));
+                return true;
+            case R.id.action_comment:
+                startActivity(new Intent(TutorActivity.this, TutorChat.class));
+                return true;
             case R.id.action_settings:
                 startActivity(new Intent(TutorActivity.this, PrefsActivity.class));
                 return true;

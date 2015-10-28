@@ -15,4 +15,8 @@ public interface ActivityConstants {
     public static final int STUDENT_ACTIVITY = 1009;
     public static final int CHOOSE_PHOTO_FROM_GALLERY = 1010;
     public static final int ANSWER_CAPTURE = 1011;
+    public static final int STUDENT_VIEW_PHOTO = 1012;
+    public static final int TUTOR_ACTIVITY = 1013;
+    public static final int TUTOR_CHAT = 1014;
+    public static final int STUDENT_CHAT = 1015;
 }

@@ -51,7 +51,9 @@ public class TutorInfo extends Activity {
                             user.saveInBackground(new SaveCallback(){
                                 public void done(ParseException e){
                                     if(e == null){
-                                        startActivity(new Intent(TutorInfo.this, MainActivity.class));
+                                        Intent i = new Intent(TutorInfo.this, SplashActivity.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(i);
                                     }
                                     else{
                                         Log.e("Error", e.getMessage());

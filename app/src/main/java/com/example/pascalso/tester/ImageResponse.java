@@ -37,6 +37,8 @@ public class ImageResponse extends Activity {
     private String objectID;
     private ParseFile file;
     private static String answercomment;
+    private String tutorname;
+    private String tutorId;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,6 +50,8 @@ public class ImageResponse extends Activity {
         sendClick();
         commentClick();
         homeClick();
+        tutorname = ParseUser.getCurrentUser().get("firstname").toString();
+        tutorId = ParseUser.getCurrentUser().getObjectId();
     }
 
     private void drawImage(){
@@ -55,13 +59,19 @@ public class ImageResponse extends Activity {
         int callingActivity = getIntent().getIntExtra("calling-activity", 0);
         switch (callingActivity){
             case ActivityConstants.CHOOSE_PHOTO_FROM_GALLERY:
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);
                 Bitmap image = ChoosePhotoFromGallery.getImage();
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(image,1080,1920,true);
-                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                imageView.setImageBitmap(rotatedBitmap);
+                if (image.getHeight() > image.getWidth()){
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setImageBitmap(image);
+                }
+                else {
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, 1080, 1920, true);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setImageBitmap(rotatedBitmap);
+                }
                 selectedimage = ChoosePhotoFromGallery.getImage();
                 break;
             case ActivityConstants.ANSWER_CAPTURE:
@@ -97,6 +107,7 @@ public class ImageResponse extends Activity {
                 alertDialog.setPositiveButton("Add Comment", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         answercomment = editText.getText().toString();
+
                     }
                 });
                 alertDialog.show();
@@ -112,6 +123,7 @@ public class ImageResponse extends Activity {
                 //startActivity(new Intent(SelectedImageFragment.this, PhotoInfoFragment.class));
                 addResponseToParse();
                 sendPushToStudent();
+                clearData();
                 startActivity(new Intent(ImageResponse.this, TutorActivity.class));
                 finish();
             }
@@ -138,7 +150,9 @@ public class ImageResponse extends Activity {
             public void done(ParseObject image, ParseException e) {
                 if (e == null) {
                     image.put("Answer", file);
-                    image.put("TutorComment", answercomment);
+                    image.put("TutorComment", answercomment + "");
+                    image.put("tutorname", tutorname);
+                    image.put("tutorId", tutorId);
                     image.saveInBackground();
                     Toast.makeText(getApplicationContext(), "Your Reply Has Been Posted",
                             Toast.LENGTH_SHORT).show();
@@ -153,5 +167,11 @@ public class ImageResponse extends Activity {
         push.setChannel(username);
         push.setMessage("A tutor has responded to your question!");
         push.sendInBackground();
+    }
+
+    private void clearData(){
+        selectedimage = null;
+        answercomment = null;
+        SelectedImageFragment.setImage(null);
     }
 }

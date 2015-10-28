@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
 
     private PreviewSurfaceView camView;
     private CameraPreview cameraPreview;
@@ -46,13 +46,13 @@ public class MainActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createCameraPreview();
-        mCamera.autoFocus(null);
         takepicClick();
         galleryClick();
         receivedClick();
+        //mCamera.autoFocus(null);
     }
 
-    private Camera getCameraInstance(){
+    private Camera getCameraInstance() {
         Camera camera= null;
         try {
             camera = Camera.open();
@@ -135,9 +135,7 @@ public class MainActivity extends Activity{
                 ParseUser user = ParseUser.getCurrentUser();
                 String identity = user.getString("usertype");
                 if(identity.equals("tutor")){
-                    Intent tutorActivity = new Intent(MainActivity.this, TutorActivity.class);
-                    tutorActivity.putExtra("calling-activity", ActivityConstants.MAIN_ACTIVITY);
-                    startActivity(tutorActivity);
+                    finish();
                 }
                 else {
                     startActivity(new Intent(MainActivity.this, StudentActivity.class));
@@ -258,7 +256,7 @@ public class MainActivity extends Activity{
 
     protected void onStart(){
         super.onStart();
-        mCamera.autoFocus(null);
+        //mCamera.autoFocus(null);
     }
 
     protected void onPause(){
@@ -269,7 +267,7 @@ public class MainActivity extends Activity{
     protected void onResume(){
         super.onResume();
         mCamera.startPreview();
-        mCamera.autoFocus(null);
+        //mCamera.autoFocus(null);
     }
 
     protected void onDestroy(){
@@ -280,7 +278,7 @@ public class MainActivity extends Activity{
         super.onRestart();
         setContentView(R.layout.activity_main);
         createCameraPreview();
-        mCamera.autoFocus(null);
+        //mCamera.autoFocus(null);
         takepicClick();
         galleryClick();
         receivedClick();

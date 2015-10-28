@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +19,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -41,6 +41,7 @@ public class StudentActivity extends Activity {
     private static ArrayList<Date> dates = new ArrayList<>();
     private static ArrayList<String> answered = new ArrayList<>();
     private static ArrayList<String> comments = new ArrayList<>();
+    private static ArrayList<String> tutorIds = new ArrayList<>();
     private int minute;
     private int hour;
     private int day;
@@ -48,41 +49,54 @@ public class StudentActivity extends Activity {
     private static ParseFile selectedimage;
     private String username;
     private static String comment;
+    private static String answer;
+    private Handler handler = new Handler();
+    private static String tutorId;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student);
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Photos");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_student);
         ParseUser currentUser = ParseUser.getCurrentUser();
         username = currentUser.getUsername();
+        answered = SplashActivity.getAnswers();
         timecreated = SplashActivity.getTimeCreated();
         subjects = SplashActivity.getSubjects();
         photos = SplashActivity.getPhotos();
-        answered = SplashActivity.getAnswers();
         comments = SplashActivity.getComments();
+        tutorIds = SplashActivity.getTutorIds();
         CustomListStudentAdapter adapter = new CustomListStudentAdapter(this, subjects, timecreated, imgid, answered);
         listView = (ListView)findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
+                startActivity(new Intent(StudentActivity.this, StudentViewPhoto.class));
                 selectedimage = photos.get(+position);
                 comment = comments.get(+position);
-                startActivity(new Intent(StudentActivity.this, StudentViewPhoto.class));
+                tutorId = tutorIds.get(+position);
+                answer = answered.get(+position);
             }
         });
-        autoUpdate();
+        //handler.postDelayed(runnable, 500);
     }
 
     public static ParseFile getImage(){
         return selectedimage;
     }
 
-    public static String getComment(){ return comment; }
+    public static String getComment(){
+        return comment;
+    }
+
+    public static String getTutorId(){
+        return tutorId;
+    }
+
+    public static String getAnswered() { return answer; }
+
 
     private void autoUpdate(){
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("Questions");
@@ -101,16 +115,24 @@ public class StudentActivity extends Activity {
                                 photos.clear();
                                 dates.clear();
                                 comments.clear();
+                                tutorIds.clear();
+                                answered.clear();
                                 int x = 0;
                                 while (x < parseObjects.size()){
                                     String subject = parseObjects.get(x).getString("subject");
                                     Date date = parseObjects.get(x).getUpdatedAt();
                                     ParseFile photo = parseObjects.get(x).getParseFile("ImageFile");
+                                    String tutorId = parseObjects.get(x).getString("tutorId");
+                                    String ans = parseObjects.get(x).getString("answered");
+                                    answered.add(ans);
+                                    tutorIds.add(tutorId);
                                     subjects.add(subject);
                                     dates.add(date);
                                     photos.add(photo);
                                     x++;
                                 }
+                                Collections.reverse(answered);
+                                Collections.reverse(tutorIds);
                                 Collections.reverse(subjects);
                                 Collections.reverse(dates);
                                 Collections.reverse(photos);
@@ -124,6 +146,9 @@ public class StudentActivity extends Activity {
                                                             int position, long id) {
                                         // TODO Auto-generated method stub
                                         selectedimage = photos.get(+position);
+                                        comment = comments.get(+position);
+                                        tutorId = tutorIds.get(+position);
+                                        answer = answered.get(+position);
                                         startActivity(new Intent(StudentActivity.this, StudentViewPhoto.class));
                                     }
                                 });
@@ -137,6 +162,7 @@ public class StudentActivity extends Activity {
             }
         });
     }
+
     private void compareDate(){
         Calendar calendar = Calendar.getInstance();
         minute = calendar.get(Calendar.MINUTE);
@@ -155,26 +181,38 @@ public class StudentActivity extends Activity {
                     timecreated.add(b + " minutes ago");
                 }
             }
-            else{
-                if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
-                    int c = hour - calendar.get(Calendar.HOUR_OF_DAY);
-                    if (c == 1) {
-                        timecreated.add(c + " hour ago");
+            else {
+                if(calendar.get(Calendar.MONTH) == month) {
+                    if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
+                        int c = hour - calendar.get(Calendar.HOUR_OF_DAY);
+                        if (c == 1) {
+                            timecreated.add(c + " hour ago");
+                        } else {
+                            timecreated.add(c + " hours ago");
+                        }
                     } else {
-                        timecreated.add(c + " hours ago");
+                        int d = day - calendar.get(Calendar.DAY_OF_MONTH);
+                        if (d == 1) {
+                            timecreated.add(d + " day ago");
+                        } else {
+                            timecreated.add(d + " days ago");
+                        }
                     }
-                } else {
-                    int d = day - calendar.get(Calendar.DAY_OF_MONTH);
-                    if (d == 1) {
-                        timecreated.add(d + " day ago");
-                    } else {
-                        timecreated.add(d + " days ago");
+                }
+                else {
+                    int e = month - calendar.get(Calendar.MONTH);
+                    if (e == 1) {
+                        timecreated.add(e + " month ago");
+                    }
+                    else{
+                        timecreated.add(e + " months ago");
                     }
                 }
             }
             x++;
         }
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -184,6 +222,9 @@ public class StudentActivity extends Activity {
 
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
+            case R.id.action_comment:
+                startActivity(new Intent(StudentActivity.this, StudentChat.class));
+                return true;
             case R.id.action_profile:
                 startActivity(new Intent(StudentActivity.this, UniversityList.class));
                 return true;
@@ -193,6 +234,43 @@ public class StudentActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+    private Runnable runnable = new Runnable(){
+        @Override
+        public void run(){
+            refreshQuestions();
+            handler.postDelayed(this, 100);
+        }
+    };
+
+    private void refreshQuestions(){
+        autoUpdate();
+    }
+
+     */
+    protected void onStart(){
+        super.onStart();
+        autoUpdate();
+    }
+
+    protected void onPause(){
+        super.onPause();
+    }
+
+    protected void onResume(){
+        super.onResume();
+        autoUpdate();
+    }
+
+    protected void onDestroy(){
+        super.onDestroy();
+    }
+
+    protected void onRestart(){
+        super.onRestart();
+        autoUpdate();
     }
 }
 

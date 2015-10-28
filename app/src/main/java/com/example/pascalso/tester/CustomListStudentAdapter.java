@@ -35,12 +35,12 @@ public class CustomListStudentAdapter extends ArrayAdapter<String> {
 
     public View getView(int position,View view,ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.mylist, null, true);
+        View rowView = inflater.inflate(R.layout.mylist, null);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.item);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
         txtTitle.setText(subjects.get(position));
-        if(answered.get(position).equals("yes")){
+        if(answered.get(position).equals("yes")) {
             imageView.setImageResource(imgid[1]);
             extratxt.setText("Replied: " + timecreated.get(position));
         }

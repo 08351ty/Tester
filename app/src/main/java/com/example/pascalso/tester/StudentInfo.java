@@ -97,7 +97,9 @@ public class StudentInfo extends Activity {
                                     if (e == null) {
                                         Toast.makeText(getApplicationContext(), "Yay! Your New Account Has Been Created",
                                                 Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(StudentInfo.this, MainActivity.class));
+                                        Intent i = new Intent(StudentInfo.this, SplashActivity.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(i);
                                     } else {
                                         Log.e("Error", e.getMessage());
                                     }

@@ -35,7 +35,8 @@
             android:id="@+id/captureanswer"
             android:layout_gravity="center"
             android:padding="50dp"
-            android:background="@drawable/ic_action_takepic"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_action_takepic1"
             />
 
     </FrameLayout>

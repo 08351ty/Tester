@@ -96,6 +96,7 @@ public class TutorViewPhoto extends FragmentActivity {
                                         case 0:
                                             addResponseToParse();
                                             sendPushToStudent();
+                                            clearData();
                                             Toast.makeText(getApplicationContext(), "Your Reply Has Been Posted",
                                                     Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(TutorViewPhoto.this, MainActivity.class));
@@ -147,8 +148,12 @@ public class TutorViewPhoto extends FragmentActivity {
         query.getInBackground(objectID, new GetCallback<ParseObject>() {
             public void done(ParseObject image, ParseException e) {
                 if (e == null) {
+                    String tutorId = ParseUser.getCurrentUser().getObjectId();
+                    String tutorname = ParseUser.getCurrentUser().get("firstname").toString();
                     image.put("Answer", file);
                     image.put("TutorComment", answercomment + "");
+                    image.put("tutorname", tutorname);
+                    image.put("tutorId", tutorId);
                     image.saveInBackground();
                     Toast.makeText(getApplicationContext(), "Your Reply Has Been Posted",
                             Toast.LENGTH_SHORT).show();
@@ -167,5 +172,11 @@ public class TutorViewPhoto extends FragmentActivity {
 
     public static String getUsername(){
         return username;
+    }
+
+    private void clearData(){
+        selectedimage = null;
+        answercomment = null;
+        SelectedImageFragment.setImage(null);
     }
 }

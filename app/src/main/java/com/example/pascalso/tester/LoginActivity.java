@@ -41,8 +41,9 @@ public class LoginActivity extends Activity {
                     @Override
                     public void done(ParseUser parseUser, ParseException e) {
                         if (parseUser != null){
-                            startActivity(new Intent(LoginActivity.this, SplashActivity.class));
-                            finish();
+                            Intent i = new Intent(LoginActivity.this, SplashActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(i);
                         }
 
                         else{

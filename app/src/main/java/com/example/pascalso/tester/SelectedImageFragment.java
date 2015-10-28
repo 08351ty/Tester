@@ -39,6 +39,7 @@ public class SelectedImageFragment extends Activity {
     private String curriculum;
     private EditText editText;
     private static String answercomment;
+    private String userID;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -61,15 +62,22 @@ public class SelectedImageFragment extends Activity {
                 selectedimage = MainActivity.getImage();
                 break;
             case ActivityConstants.ACCESS_GALLERY_ACTIVITY:
-                Matrix matrix = new Matrix();
-                matrix.postRotate(90);
                 Bitmap image = AccessGalleryActivity.getImage();
-                Bitmap scaledBitmap = Bitmap.createScaledBitmap(image,1080,1920,true);
-                Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap , 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                imageView.setImageBitmap(rotatedBitmap);
+                if (image.getHeight() > image.getWidth()){
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setImageBitmap(image);
+                }
+                else {
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(image, 1080, 1920, true);
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setImageBitmap(rotatedBitmap);
+                }
                 //imageView.setImageBitmap(AccessGalleryActivity.getImage());
                 selectedimage = AccessGalleryActivity.getImage();
+
                 break;
         }
     }
@@ -87,6 +95,7 @@ public class SelectedImageFragment extends Activity {
         ImageButton send = (ImageButton) findViewById(R.id.sendimage);
         ParseUser user = ParseUser.getCurrentUser();
         if(user.get("usertype").equals("student")) {
+            userID = ParseUser.getCurrentUser().getObjectId();
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
@@ -101,7 +110,6 @@ public class SelectedImageFragment extends Activity {
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(SelectedImageFragment.this, android.R.layout.simple_spinner_item, subjects);
                     spinner.setAdapter(adapter);
                     editText = (EditText)dialogView.findViewById(R.id.additionalcomment);
-                    answercomment = editText.getText().toString();
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -116,6 +124,7 @@ public class SelectedImageFragment extends Activity {
                     });
                     alertDialog.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            answercomment = editText.getText().toString();
                             sendPushToTutors();
                             saveImageToParse();
                         }
@@ -135,11 +144,9 @@ public class SelectedImageFragment extends Activity {
                     alertDialog.setView(dialogView);
                     alertDialog.setTitle("Add Comment");
                     editText = (EditText)dialogView.findViewById(R.id.comment);
-                    alertDialog.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             answercomment = editText.getText().toString();
-                            saveImageToParse();
-                            sendPushToStudent();
                             Intent tutorActivity = new Intent(SelectedImageFragment.this, TutorActivity.class);
                             tutorActivity.putExtra("calling-activity", ActivityConstants.SELECTED_IMAGE_FRAGMENT);
                             startActivity(tutorActivity);
@@ -159,6 +166,10 @@ public class SelectedImageFragment extends Activity {
     }
     public static Bitmap getImage(){
         return selectedimage;
+    }
+
+    public static void setImage(Bitmap image) {
+        selectedimage = image;
     }
 
     public static String getComment() { return answercomment; }
@@ -192,24 +203,21 @@ public class SelectedImageFragment extends Activity {
         x.put("curriculum", curriculum);
         x.put("comment", answercomment);
         x.put("ImageFile", file);
+        x.put("studentID", userID);
         x.saveInBackground();
         Toast.makeText(getApplicationContext(), "Your Image Has Been Sent!",
                 Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(SelectedImageFragment.this, MainActivity.class));
-        finish();
+        Intent i = new Intent(SelectedImageFragment.this, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
     }
+
+
 
     private void sendPushToTutors(){
         ParsePush push = new ParsePush();
         push.setChannel("Tutor");
         push.setMessage("A new question has been posted!");
-        push.sendInBackground();
-    }
-
-    private void sendPushToStudent(){
-        ParsePush push = new ParsePush();
-        push.setChannel(username);
-        push.setMessage("A tutor has responded to your question!");
         push.sendInBackground();
     }
 }

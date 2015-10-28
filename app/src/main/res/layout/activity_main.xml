@@ -30,31 +30,36 @@
         android:layout_gravity="bottom">
 
         <ImageButton
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/takepic"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:padding="50dp"
-            android:background="@drawable/ic_action_takepic"
+            android:background="@drawable/ic_action_takepic1"
             />
 
         <ImageButton
             android:id="@+id/received"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical|left"
+            android:layout_gravity="center_vertical|start"
             android:padding="50dp"
-            android:background="@drawable/ic_action_received"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/ic_action_received1"
             />
 
         <ImageButton
             android:id="@+id/gallery"
             style="@android:style/Widget.Holo.Button.Borderless"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center_vertical|right"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|end"
             android:padding="50dp"
-            android:background="@drawable/ic_action_gallery"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/ic_action_gallery1"
             />
 
     </FrameLayout>

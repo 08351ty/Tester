@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
 
     <!--
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
@@ -101,12 +102,7 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".TutorActivity"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".UniversityList"
             android:parentActivityName=".StudentActivity"
@@ -149,6 +145,25 @@
 
         <activity android:name=".PrefsActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".ChatActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".StudentChat"
+            android:parentActivityName=".StudentActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StudentActivity"/>
+        </activity>
+
+        <activity android:name=".TutorChat"
+            android:parentActivityName=".TutorActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TutorActivity"/>
+        </activity>
 
         <service android:name="com.parse.PushService" />
         <receiver android:name="com.parse.ParsePushBroadcastReceiver"

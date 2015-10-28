@@ -46,7 +46,7 @@ public class AnswerCapture extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answercapture);
         createCameraPreview();
-        mCamera.autoFocus(null);
+        //mCamera.autoFocus(null);
         takepicClick();
     }
 
@@ -154,6 +154,7 @@ public class AnswerCapture extends Activity{
                 Intent startSelectedImageFragment = new Intent(AnswerCapture.this, ImageResponse.class);
                 startSelectedImageFragment.putExtra("calling-activity", ActivityConstants.ANSWER_CAPTURE);
                 startActivity(startSelectedImageFragment);
+                finish();
             }
             catch (FileNotFoundException e){
                 Log.d("TAG", "File not found" + e.getMessage());

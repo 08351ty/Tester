@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -35,6 +36,7 @@ public class SplashActivity extends Activity{
     private static ArrayList<String> grades = new ArrayList<>();
     private static ArrayList<String> usernames = new ArrayList<>();
     private static ArrayList<String> answers = new ArrayList<>();
+    private static ArrayList<String> tutorIds = new ArrayList<>();
     private static ArrayList<ParseObject> biology = new ArrayList<>();
     private static ArrayList<ParseObject> chemistry = new ArrayList<>();
     private static ArrayList<ParseObject> compsci = new ArrayList<>();
@@ -49,6 +51,7 @@ public class SplashActivity extends Activity{
     private ParseFile photo;
     private String answered;
     private String comment;
+    private String tutorId;
     private String answercomment;
 
     public void onCreate(Bundle savedInstanceState){
@@ -59,12 +62,12 @@ public class SplashActivity extends Activity{
             @Override
             public void run() {
                 ParseUser user = ParseUser.getCurrentUser();
-                if(user == null){
+                if(user == null) {
                     startActivity(new Intent(SplashActivity.this, UserVerification.class));
                     finish();
                 }
-                else{
-                    if(user.get("usertype").toString().equals("student")){
+                else {
+                    if(user.get("usertype").toString().equals("student")) {
                         //Get data of student's own profile
                         query = ParseQuery.getQuery("Questions");
                         username = user.get("username").toString();
@@ -81,20 +84,22 @@ public class SplashActivity extends Activity{
                             Date date = parseObjects.get(x).getUpdatedAt();
                             if(parseObjects.get(x).has("Answer")){
                                 photo = parseObjects.get(x).getParseFile("Answer");
+                                tutorId = parseObjects.get(x).getString("tutorId");
                                 answered = "yes";
                             }
                             else {
                                 photo = parseObjects.get(x).getParseFile("ImageFile");
+                                tutorId = null;
                                 answered = "no";
                             }
                             if(parseObjects.get(x).has("TutorComment")){
-
                                 comment = parseObjects.get(x).getString("TutorComment");
 
                             }
                             else {
                                 comment = parseObjects.get(x).getString("comment");
                             }
+                            tutorIds.add(tutorId);
                             answers.add(answered);
                             comments.add(comment);
                             subjects.add(subject);
@@ -102,6 +107,7 @@ public class SplashActivity extends Activity{
                             photos.add(photo);
                             x++;
                         }
+                        Collections.reverse(tutorIds);
                         Collections.reverse(answers);
                         Collections.reverse(comments);
                         Collections.reverse(grades);
@@ -116,6 +122,7 @@ public class SplashActivity extends Activity{
                     }
                     else{
                         //Get data of all work
+                        username = user.get("username").toString();
                         query = ParseQuery.getQuery("Questions");
                         query.whereDoesNotExist("Answer");
                         try {
@@ -149,10 +156,10 @@ public class SplashActivity extends Activity{
                             }
                             x++;
                         }
+                        ParsePush.subscribeInBackground(username);
                         ParsePush.subscribeInBackground("Tutor");
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, TutorActivity.class));
                         finish();
-
                     }
                 }
             }
@@ -195,27 +202,38 @@ public class SplashActivity extends Activity{
             calendar.setTime(dates.get(x));
             if(calendar.get(Calendar.HOUR_OF_DAY) == hour && calendar.get(Calendar.DAY_OF_MONTH) == day){
                 int b = minute - calendar.get(Calendar.MINUTE);
-                if(b == 1){
+                if(b < 2){
                     timecreated.add("Just now");
                 }
                 else{
                     timecreated.add(b + " minutes ago");
                 }
             }
-            else{
-                if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
-                    int c = hour - calendar.get(Calendar.HOUR_OF_DAY);
-                    if (c == 1) {
-                        timecreated.add(c + " hour ago");
+            else {
+                if(calendar.get(Calendar.MONTH) == month) {
+                    if (calendar.get(Calendar.DAY_OF_MONTH) == day) {
+                        int c = hour - calendar.get(Calendar.HOUR_OF_DAY);
+                        if (c == 1) {
+                            timecreated.add(c + " hour ago");
+                        } else {
+                            timecreated.add(c + " hours ago");
+                        }
                     } else {
-                        timecreated.add(c + " hours ago");
+                        int d = day - calendar.get(Calendar.DAY_OF_MONTH);
+                        if (d == 1) {
+                            timecreated.add(d + " day ago");
+                        } else {
+                            timecreated.add(d + " days ago");
+                        }
                     }
-                } else {
-                    int d = day - calendar.get(Calendar.DAY_OF_MONTH);
-                    if (d == 1) {
-                        timecreated.add(d + " day ago");
-                    } else {
-                        timecreated.add(d + " days ago");
+                }
+                else {
+                    int e = month - calendar.get(Calendar.MONTH);
+                    if (e == 1) {
+                        timecreated.add(e + " month ago");
+                    }
+                    else{
+                        timecreated.add(e + " months ago");
                     }
                 }
             }
@@ -286,5 +304,9 @@ public class SplashActivity extends Activity{
     }
 
     public static ArrayList<String> getAnswers() {return answers;}
+
+    public static ArrayList<String> getTutorIds() {return tutorIds; }
+
+    public static ArrayList<Date> getDates() {return dates; }
 
 }
