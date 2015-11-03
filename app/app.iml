@@ -94,9 +94,10 @@
     <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="commons-codec-1.4" level="project" />
+    <orderEntry type="library" exported="" name="ParseCrashReporting-1.10.3" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="swipeactionadapter-1.4.4" level="project" />
-    <orderEntry type="library" exported="" name="Parse-1.10.2" level="project" />
+    <orderEntry type="library" exported="" name="Parse-1.10.3" level="project" />
     <orderEntry type="library" exported="" name="httpcore-4.1.2" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="httpclient-cache-4.1.2" level="project" />

@@ -6,7 +6,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.pascalso.tester.StudentActivity"/>
+        className = "com.pascalso.quick.snap.StudentActivity"/>
       <point      
         x = "500"      
         y = "1480"/>
@@ -14,7 +14,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.pascalso.tester.MainActivity"/>
+        className = "com.pascalso.quick.snap.MainActivity"/>
       <point      
         x = "1768"      
         y = "100"/>
@@ -22,7 +22,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.pascalso.tester.PhotoInfoFragment"/>
+        className = "com.pascalso.quick.snap.PhotoInfoFragment"/>
       <point      
         x = "500"      
         y = "96"/>
@@ -30,7 +30,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.pascalso.tester.AccessGalleryActivity"/>
+        className = "com.pascalso.quick.snap.AccessGalleryActivity"/>
       <point      
         x = "550"      
         y = "1530"/>
@@ -38,7 +38,7 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.example.pascalso.tester.SelectedImageFragment"/>
+        className = "com.pascalso.quick.snap.SelectedImageFragment"/>
       <point      
         x = "600"      
         y = "1580"/>

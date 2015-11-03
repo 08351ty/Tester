@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
     }
-
     packagingOptions {
         exclude 'NOTICE'
         exclude 'LICENSE'
@@ -20,11 +19,11 @@ android {
     compileSdkVersion 23
     buildToolsVersion "22.0.1"
     defaultConfig {
-        applicationId "com.example.pascalso.tester"
+        applicationId 'com.pascalso.quick.snap'
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "3.0"
     }
     buildTypes {
         release {
@@ -33,6 +32,8 @@ android {
         }
         debug {
         }
+    }
+    productFlavors {
     }
 }
 

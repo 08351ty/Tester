@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pascalso.tester" >
+    package="com.pascalso.quick.snap" >
 
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -20,18 +20,18 @@
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
     <permission android:protectionLevel="signature"
-        android:name="com.example.pascalso.tester.permission.C2D_MESSAGE" />
-    <uses-permission android:name="com.example.pascalso.tester.permission.C2D_MESSAGE" />
+        android:name="com.pascalso.quick.snap.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.pascalso.quick.snap.permission.C2D_MESSAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name="com.example.pascalso.tester.Application"
+        android:name="com.pascalso.quick.snap.Application"
         android:theme="@style/AppTheme"
         android:screenOrientation="nosensor">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.pascalso.quick.snap.SplashActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
@@ -42,127 +42,137 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.pascalso.quick.snap.MainActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".StudentActivity"
-            android:parentActivityName=".MainActivity"
+        <activity android:name="com.pascalso.quick.snap.StudentActivity"
+            android:parentActivityName="com.pascalso.quick.snap.MainActivity"
             android:screenOrientation="portrait">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity"/>
+            android:value="com.pascalso.quick.snap.MainActivity"/>
         </activity>
 
-        <activity android:name=".SelectedImageFragment"
+        <activity android:name="com.pascalso.quick.snap.SelectedImageFragment"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.pascalso.quick.snap.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pascalso.quick.snap.SelectedImageFragment"/>
+        </activity>
+
+        <activity android:name="com.pascalso.quick.snap.AccessGalleryActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.pascalso.quick.snap.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pascalso.quick.snap.AccessGalleryActivity"/>
+        </activity>
+
+        <activity android:name="com.pascalso.quick.snap.PhotoInfoFragment"
+            android:parentActivityName="com.pascalso.quick.snap.MainActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pascalso.quick.snap.MainActivity"/>
+        </activity>
+
+        <activity android:name="com.pascalso.quick.snap.NewUserActivity"
+            android:parentActivityName="com.pascalso.quick.snap.UserVerification"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pascalso.quick.snap.UserVerification"/>
+        </activity>
+
+        <activity android:name="com.pascalso.quick.snap.TutorViewPhoto"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".AccessGalleryActivity"
+        <activity android:name="com.pascalso.quick.snap.StudentInfo"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".PhotoInfoFragment"
-            android:parentActivityName=".MainActivity"
+        <activity android:name="com.pascalso.quick.snap.TutorInfo"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.pascalso.quick.snap.UserVerification"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.pascalso.quick.snap.LoginActivity"
+            android:parentActivityName="com.pascalso.quick.snap.UserVerification"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value="com.pascalso.quick.snap.UserVerification"/>
         </activity>
 
-        <activity android:name=".NewUserActivity"
-            android:parentActivityName=".UserVerification"
+        <activity android:name="com.pascalso.quick.snap.CardView"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.pascalso.quick.snap.TutorActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.pascalso.quick.snap.UniversityList"
+            android:parentActivityName="com.pascalso.quick.snap.StudentActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UserVerification"/>
+                android:value="com.pascalso.quick.snap.StudentActivity"/>
         </activity>
 
-        <activity android:name=".TutorViewPhoto"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".StudentInfo"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".TutorInfo"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".UserVerification"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".LoginActivity"
-            android:parentActivityName=".UserVerification"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".UserVerification"/>
-        </activity>
-
-        <activity android:name=".CardView"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".TutorActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".UniversityList"
-            android:parentActivityName=".StudentActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StudentActivity"/>
-        </activity>
-
-        <activity android:name=".TutorCardView"
-            android:parentActivityName=".UniversityList"
+        <activity android:name="com.pascalso.quick.snap.TutorCardView"
+            android:parentActivityName="com.pascalso.quick.snap.UniversityList"
             android:screenOrientation="portrait">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".UniversityList"/>
+            android:value="com.pascalso.quick.snap.UniversityList"/>
         </activity>
 
-        <activity android:name=".QuestionPick"
-            android:parentActivityName=".TutorActivity"
+        <activity android:name="com.pascalso.quick.snap.QuestionPick"
+            android:parentActivityName="com.pascalso.quick.snap.TutorActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TutorActivity"/>
+                android:value="com.pascalso.quick.snap.TutorActivity"/>
         </activity>
 
-        <activity android:name=".AnswerCapture"
+        <activity android:name="com.pascalso.quick.snap.AnswerCapture"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ImageResponse"
+        <activity android:name="com.pascalso.quick.snap.ImageResponse"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ChoosePhotoFromGallery"
+        <activity android:name="com.pascalso.quick.snap.ChoosePhotoFromGallery"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".StudentViewPhoto"
+        <activity android:name="com.pascalso.quick.snap.StudentViewPhoto"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".PrefsActivity"
+        <activity android:name="com.pascalso.quick.snap.PrefsActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ChatActivity"
+        <activity android:name="com.pascalso.quick.snap.ChatActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".StudentChat"
-            android:parentActivityName=".StudentActivity"
+        <activity android:name="com.pascalso.quick.snap.StudentChat"
+            android:parentActivityName="com.pascalso.quick.snap.StudentActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StudentActivity"/>
+                android:value="com.pascalso.quick.snap.StudentActivity"/>
         </activity>
 
-        <activity android:name=".TutorChat"
-            android:parentActivityName=".TutorActivity"
+        <activity android:name="com.pascalso.quick.snap.TutorChat"
+            android:parentActivityName="com.pascalso.quick.snap.TutorActivity"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".TutorActivity"/>
+                android:value="com.pascalso.quick.snap.TutorActivity"/>
         </activity>
 
         <service android:name="com.parse.PushService" />
@@ -183,7 +193,7 @@
                 <!--
                   IMPORTANT: Change "com.parse.starter" to match your app's package name.
                 -->
-                <category android:name="com.example.pascalso.tester" />
+                <category android:name="com.pascalso.quick.snap" />
             </intent-filter>
         </receiver>
         <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/pushicon"/>
