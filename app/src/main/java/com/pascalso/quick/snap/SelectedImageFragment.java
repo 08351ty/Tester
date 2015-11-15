@@ -85,7 +85,7 @@ public class SelectedImageFragment extends Activity {
         ImageButton home = (ImageButton)findViewById(R.id.returnhome);
         home.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                startActivity(new Intent(SelectedImageFragment.this, MainActivity.class));
+                finish();
             }
         });
     }

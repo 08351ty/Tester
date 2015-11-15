@@ -121,8 +121,9 @@ public class ImageResponse extends Activity {
                 addResponseToParse();
                 sendPushToStudent();
                 clearData();
-                startActivity(new Intent(ImageResponse.this, TutorActivity.class));
-                finish();
+                Intent i = new Intent(ImageResponse.this, TutorActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
             }
         });
     }

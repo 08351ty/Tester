@@ -15,6 +15,4 @@ public class StudentPushReceiver extends ParsePushBroadcastReceiver {
         super.onPushOpen(context, intent);
     }
 
-
-
 }

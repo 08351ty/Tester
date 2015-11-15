@@ -6,6 +6,94 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.SplashActivity"/>
+      <point      
+        x = "4304"      
+        y = "7000"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.ImageResponse"/>
+      <point      
+        x = "496"      
+        y = "11138"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.ChoosePhotoFromGallery"/>
+      <point      
+        x = "550"      
+        y = "11190"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.TutorChat"/>
+      <point      
+        x = "3036"      
+        y = "5620"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.QuestionPick"/>
+      <point      
+        x = "1768"      
+        y = "7000"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "com.pascalso.quick.snap.QuestionPick"/>
+      <point      
+        x = "3036"      
+        y = "7000"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.LoginActivity"/>
+      <point      
+        x = "600"      
+        y = "11240"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.TutorViewPhoto"/>
+      <point      
+        x = "3036"      
+        y = "8380"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.AnswerCapture"/>
+      <point      
+        x = "650"      
+        y = "11290"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.StudentViewPhoto"/>
+      <point      
+        x = "5572"      
+        y = "1480"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "com.pascalso.quick.snap.StudentActivity"/>
+      <point      
+        x = "496"      
+        y = "96"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.pascalso.quick.snap.StudentActivity"/>
       <point      
         x = "500"      
@@ -14,18 +102,58 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.pascalso.quick.snap.MainActivity"/>
+        className = "com.pascalso.quick.snap.TutorActivity"/>
+      <point      
+        x = "500"      
+        y = "4240"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "com.pascalso.quick.snap.TutorActivity"/>
       <point      
         x = "1768"      
-        y = "100"/>
+        y = "4240"/>
     </statePointEntry>
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
-        className = "com.pascalso.quick.snap.PhotoInfoFragment"/>
+        className = "com.pascalso.quick.snap.StudentInfo"/>
       <point      
-        x = "500"      
-        y = "96"/>
+        x = "700"      
+        y = "11340"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "com.pascalso.quick.snap.UniversityList"/>
+      <point      
+        x = "3036"      
+        y = "1480"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.UniversityList"/>
+      <point      
+        x = "1768"      
+        y = "1480"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.CardView"/>
+      <point      
+        x = "750"      
+        y = "11390"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.UserVerification"/>
+      <point      
+        x = "800"      
+        y = "11440"/>
     </statePointEntry>
     <statePointEntry>
       <state      
@@ -38,10 +166,82 @@
     <statePointEntry>
       <state      
         class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.PhotoInfoFragment"/>
+      <point      
+        x = "500"      
+        y = "96"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.PrefsActivity"/>
+      <point      
+        x = "1768"      
+        y = "2860"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.TutorCardView"/>
+      <point      
+        x = "496"      
+        y = "9759"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.MenuState"      
+        className = "com.pascalso.quick.snap.TutorCardView"/>
+      <point      
+        x = "1765"      
+        y = "9759"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.MainActivity"/>
+      <point      
+        x = "1768"      
+        y = "100"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
         className = "com.pascalso.quick.snap.SelectedImageFragment"/>
       <point      
         x = "600"      
         y = "1580"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.TutorInfo"/>
+      <point      
+        x = "850"      
+        y = "11490"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.ChatActivity"/>
+      <point      
+        x = "3034"      
+        y = "96"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.StudentChat"/>
+      <point      
+        x = "1758"      
+        y = "90"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.pascalso.quick.snap.NewUserActivity"/>
+      <point      
+        x = "900"      
+        y = "11540"/>
     </statePointEntry>
   </locations>
 </navigationModel>

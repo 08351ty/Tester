@@ -165,7 +165,7 @@ public class MainActivity extends Activity {
                 fos.close();
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES), "Tester");
+                        Environment.DIRECTORY_PICTURES), "Quicksnap");
                 String imagePath = mediaStorageDir.getPath() + File.separator
                         + "IMG_" + timeStamp + ".jpg";
                 MainActivity.this.sendBroadcast(new Intent(
@@ -199,10 +199,10 @@ public class MainActivity extends Activity {
     }
 
     private static File getOutputMediaFile(int type){
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Tester");
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Quicksnap");
         if(!mediaStorageDir.exists()){
             if(!mediaStorageDir.mkdirs()){
-                Log.d("Tester", "failed to create directory");
+                Log.d("Quicksnap", "failed to create directory");
                 return null;
             }
         }
