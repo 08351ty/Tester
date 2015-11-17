@@ -235,24 +235,6 @@ public class SplashActivity extends Activity{
         }
     }
 
-    private void compileBiology(){
-        /**
-        Date date = biology.get(x).getCreatedAt();
-        ParseFile photo = biology.get(x).getParseFile("ImageFile");
-        String curr = biology.get(x).getString("curriculum");
-        String grade = biology.get(x).getString("grade");
-        String comment = biology.get(x).getString("comment");
-        String username = biology.get(x).getString("username");
-        usernames.add(username);
-        comments.add(comment);
-        curriculum.add(curr);
-        grades.add(grade);
-        subjects.add(subject);
-        dates.add(date);
-        photos.add(photo);
-         */
-    }
-
     public static ArrayList<String> getTimeCreated(){
         return timecreated;
     }
