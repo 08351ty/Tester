@@ -71,14 +71,6 @@
                 android:value="com.pascalso.quick.snap.AccessGalleryActivity"/>
         </activity>
 
-        <activity android:name="com.pascalso.quick.snap.PhotoInfoFragment"
-            android:parentActivityName="com.pascalso.quick.snap.MainActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pascalso.quick.snap.MainActivity"/>
-        </activity>
-
         <activity android:name="com.pascalso.quick.snap.NewUserActivity"
             android:parentActivityName="com.pascalso.quick.snap.UserVerification"
             android:screenOrientation="portrait">
@@ -107,9 +99,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pascalso.quick.snap.UserVerification"/>
         </activity>
-
-        <activity android:name="com.pascalso.quick.snap.CardView"
-            android:screenOrientation="portrait"/>
 
         <activity android:name="com.pascalso.quick.snap.TutorActivity"
             android:screenOrientation="portrait"/>

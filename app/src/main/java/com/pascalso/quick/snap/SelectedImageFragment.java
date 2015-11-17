@@ -98,7 +98,6 @@ public class SelectedImageFragment extends Activity {
             send.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    //startActivity(new Intent(SelectedImageFragment.this, PhotoInfoFragment.class));
                     subjects = TutorActivity.getSubjects();
                     LayoutInflater inflater = getLayoutInflater();
                     View dialogView = inflater.inflate(R.layout.activity_choosesubject, null);
