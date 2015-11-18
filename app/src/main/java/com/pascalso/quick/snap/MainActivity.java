@@ -198,10 +198,10 @@ public class MainActivity extends Activity {
         selectedimage = image;
     }
 
-    private static File getOutputMediaFile(int type){
+    private static File getOutputMediaFile(int type) {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Quicksnap");
-        if(!mediaStorageDir.exists()){
-            if(!mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 Log.d("Quicksnap", "failed to create directory");
                 return null;
             }
@@ -209,38 +209,14 @@ public class MainActivity extends Activity {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
-        if(type == MEDIA_TYPE_IMAGE)
+        if (type == MEDIA_TYPE_IMAGE)
             mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
-        else if(type == MEDIA_TYPE_VIDEO)
+        else if (type == MEDIA_TYPE_VIDEO)
             mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
         else
             return null;
         return mediaFile;
     }
-
-    /**
-    protected void focusOnTouch(MotionEvent event) {
-        if (mCamera != null) {
-
-            mCamera.cancelAutoFocus();
-            Rect focusRect = calculateTapArea(event.getX(), event.getY(), 1f);
-            Rect meteringRect = calculateTapArea(event.getX(), event.getY(), 1.5f);
-
-            Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            parameters.setFocusAreas(Lists.newArrayList(new Camera.Area(focusRect, 1000)));
-
-
-            if (meteringAreaSupported) {
-                parameters.setMeteringAreas(Lists.newArrayList(new Camera.Area(meteringRect, 1000)));
-            }
-
-
-            mCamera.setParameters(parameters);
-            mCamera.autoFocus(this);
-        }
-    }*/
-
 
     protected void onStart(){
         super.onStart();

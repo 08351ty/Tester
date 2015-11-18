@@ -29,10 +29,6 @@ public class UniversityList extends Activity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id){
                 setCollege(colleges[position]);
-                /**
-                Toast.makeText(UniversityList.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-                 */
                 startActivity(new Intent(UniversityList.this, TutorCardView.class));
                 Toast.makeText(UniversityList.this, colleges[position],
                         Toast.LENGTH_SHORT).show();
